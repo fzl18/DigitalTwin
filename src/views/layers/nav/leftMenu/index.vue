@@ -81,6 +81,12 @@ export default {
 
 <style lang="scss" scoped>
 .leftMenu {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  height: 100%;
+  padding: 20px 30px;
+  background: rgba($color: #000000, $alpha: 0.3);
   .list {
     .item {
       display: block;

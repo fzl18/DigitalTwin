@@ -32,8 +32,13 @@ export default {
 
 <style lang="scss" scoped>
 .rightMenu {
+  background: #000;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
   ul {
-    width: 200px;
     li {
       cursor: pointer;
       width: 20px;

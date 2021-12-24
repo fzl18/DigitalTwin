@@ -48,6 +48,10 @@ export default {
 .box {
   position: relative;
   transition: all 0.5s ease-in-out;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
   // transform-origin: 0 0;
   &.fadeleftin {
     transform: translateX(0px);

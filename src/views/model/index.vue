@@ -68,18 +68,21 @@ export default {
       this.open = true;
       this.screenfull();
       setTimeout(() => {
-        const { camera } = this.$refs.renderer.global;
+        const { camera, controls } = this.$refs.renderer.global;
         let tw1 = cameraViewerTransfrom(camera, { x: 0.2, y: -5, z: 1 });
         let tw2 = cameraViewerTransfrom(camera, { x: -0.2, y: -2, z: 0.2 });
         let tw3 = cameraViewerTransfrom(
           camera,
           { x: 3.6, y: -3.4, z: 3.2 },
-          () => panelHandle(["leftMenu", "header", "rightMenu", "bottomMenu"])
+          () => {
+            panelHandle(["leftMenu", "header", "rightMenu", "bottomMenu"]);
+            setTimeout(() => (controls.autoRotate = true), 2000);
+          }
         );
         tw1.chain(tw2);
         tw2.chain(tw3);
         tw1.start();
-      }, 1000);
+      }, 1600);
     },
     screenfull() {
       screenfull.toggle();

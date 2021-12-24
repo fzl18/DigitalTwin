@@ -102,11 +102,11 @@ const playAnimationByName = (model, animationName) => {
 const loadModel = (options) => {
   const loader = new GLTFLoader();
   if (options.draco) {
-    // const dracoLoader = new DRACOLoader();
-    // dracoLoader.setDecoderPath('/draco/gltf/');
-    // dracoLoader.setDecoderConfig({ type: 'js' });
-    // dracoLoader.preload();
-    // loader.setDRACOLoader(dracoLoader);
+    const dracoLoader = new DRACOLoader();
+    dracoLoader.setDecoderPath(`${process.env.BASE_URL}draco/gltf/`);
+    dracoLoader.setDecoderConfig({ type: "js" });
+    dracoLoader.preload();
+    loader.setDRACOLoader(dracoLoader);
     console.log("draco");
   }
   loader.load(

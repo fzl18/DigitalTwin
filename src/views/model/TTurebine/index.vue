@@ -333,12 +333,12 @@ export default {
       );
     },
     loadingOut() {
-      let loader = new GLTFLoader();
-      loader.load(
-        `${process.env.BASE_URL}model/out.glb`,
-        (object) => {
+      loadModel({
+        draco: true,
+        url: "model/out_small.gltf",
+        complete: (object) => {
+          console.log(object);
           let mesh = object.scene;
-          // this.equipment = mesh;
           let scale = 0.0001 * 1;
           mesh.scale.set(scale, scale, scale);
           mesh.rotateX(Math.PI / 2);
@@ -349,8 +349,26 @@ export default {
           this.global.scene.add(mesh);
           mesh.position.set(1.5, 0, -0.5);
         },
-        this.onProgress
-      );
+        onprocess: (xhr) => this.onProgress(xhr, true),
+      });
+      // let loader = new GLTFLoader();
+      // loader.load(
+      //   `${process.env.BASE_URL}model/out.glb`,
+      //   (object) => {
+      //     let mesh = object.scene;
+      //     // this.equipment = mesh;
+      //     let scale = 0.0001 * 1;
+      //     mesh.scale.set(scale, scale, scale);
+      //     // mesh.rotateX(Math.PI / 2);
+      //     // mesh.rotateY(-Math.PI / 2);
+      //     mesh.visible = false;
+      //     mesh.children[0].material.color = new THREE.Color(0, 1, 0);
+      //     mesh.children[0].material.emissive.setHex(0x00ff00);
+      //     this.global.scene.add(mesh);
+      //     mesh.position.set(1.5, 0, -0.5);
+      //   },
+      //   this.onProgress
+      // );
     },
     //添加和改变风机旋转动画
     changeAnimation(turbine, animationName) {

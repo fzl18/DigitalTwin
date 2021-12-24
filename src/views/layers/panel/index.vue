@@ -1,6 +1,7 @@
 <template>
   <div class="panel">
     <div class="dateTime"><DateTime /></div>
+    <div class="level"><DateTime /></div>
   </div>
 </template>
 
@@ -15,16 +16,26 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+:root {
+  --base-color: #999;
+}
 .panel {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  .dateTime {
+  & > div {
     position: absolute;
+  }
+  .dateTime {
     right: 0;
     top: 20%;
+  }
+  .level {
+    top: 50%;
+    left: 50%;
+    color: var(--base-color);
   }
 }
 </style>
