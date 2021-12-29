@@ -1,15 +1,10 @@
 <template>
-  <div>
+  <div class="renderer" :style="rendererStyle">
     <slot></slot>
     <div
       class="model-container"
       :style="{ top: -$store.state.screen.offset / 2 + 'px' }"
     >
-      <div
-        :class="['mask', $store.state.layer.alarm ? 'animation' : '']"
-        v-show="$store.state.screen.maskEnable"
-        :style="maskStyle"
-      ></div>
       <div ref="container"></div>
     </div>
   </div>
@@ -19,15 +14,19 @@ import { WebGLRenderer, Clock } from "three";
 import { CSS2DRenderer } from "three/examples/jsm/renderers/CSS2DRenderer";
 import TWEEN from "@tweenjs/tween.js";
 import config from "@/config";
+import Loading from "../../../../views/components/loading.vue";
 export default {
   name: "TRenderer",
+  components: {
+    Loading,
+  },
   props: {
     size: {
       type: Object,
       default: () => {
         return {
-          w: 640,
-          h: 400,
+          w: config.screen.sceneWidth,
+          h: config.screen.sceneHeight,
         };
       },
       validator: function(size) {
@@ -61,22 +60,10 @@ export default {
     };
   },
   computed: {
-    maskStyle() {
-      let { alarm, warnbgColor, errorbgColor } = this.$store.state.layer;
-      let color;
-      switch (alarm) {
-        case "warn":
-          color = warnbgColor;
-          break;
-        case "error":
-          color = errorbgColor;
-          break;
-        default:
-          color = this.$store.state.screen.maskColor;
-          break;
-      }
+    rendererStyle() {
       return {
-        backgroundImage: `radial-gradient(transparent 40%,${color})`,
+        width: this.size.w + "px",
+        height: this.size.h + "px",
       };
     },
   },
@@ -121,34 +108,9 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.model-container {
-  position: relative;
-  .mask {
-    // filter: brightness(2) blur(0px) hue-rotate(130deg) grayscale(1);
-    position: absolute;
-    opacity: 1;
-    width: 100%;
-    height: 100%;
-    z-index: 999;
-    pointer-events: none;
-    background-repeat: no-repeat;
-    background-size: 160% 140%;
-    background-position: center;
-    &.animation {
-      animation: flash 600ms infinite;
-    }
-  }
-}
-
-@keyframes flash {
-  0% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.2;
-  }
-  100% {
-    opacity: 1;
+.renderer {
+  .model-container {
+    position: relative;
   }
 }
 </style>

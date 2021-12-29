@@ -85,6 +85,7 @@ export default {
   justify-content: center;
   flex-direction: column;
   height: 100%;
+  width: 100%;
   padding: 20px 30px;
   background: rgba($color: #000000, $alpha: 0.3);
   .list {

@@ -18,15 +18,12 @@ import screenfull from "screenfull";
 import api from "@/views/api/common";
 export default {
   name: "topMenu",
-  inject: ["global"],
   data() {
     return {
       userinfo: this.$store.state.userinfo,
     };
   },
-  mounted() {
-    // console.log(this.global);
-  },
+  mounted() {},
   methods: {
     screenfull() {
       screenfull.toggle();

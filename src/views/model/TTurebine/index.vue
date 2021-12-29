@@ -218,9 +218,10 @@ export default {
   },
   methods: {
     onProgress(xhr, show) {
+      console.log(xhr.currentTarget.responseURL.split("/model/").pop());
       if (xhr.loaded == xhr.total) {
         this.$dbStorage.setItem(
-          xhr.currentTarget.responseURL,
+          xhr.currentTarget.responseURL.split("/model/").pop(),
           xhr.currentTarget.response
         );
       }
@@ -231,10 +232,10 @@ export default {
     loadTurbine() {
       loadModel({
         draco: true,
-        url: "model/untitled1.glb",
+        url: "model/untitled1_small.glb",
         complete: (object) => {
           this.$emit("complete");
-          console.log(object);
+          // console.log(object);
           this.matrixTurbine = object;
           let mesh = object.scene;
           this.mesh = mesh;
@@ -254,44 +255,12 @@ export default {
         },
         onprocess: (xhr) => this.onProgress(xhr, true),
       });
-      // const loader = new GLTFLoader();
-      // // Draco 解码库
-      // // const dracoLoader = new DRACOLoader();
-      // // dracoLoader.setDecoderPath('/draco/gltf/');
-      // // dracoLoader.setDecoderConfig({ type: 'js' });
-      // // dracoLoader.preload();
-      // // loader.setDRACOLoader(dracoLoader);
-
-      // loader.load(
-      //   `${process.env.BASE_URL}model/untitled1.glb`,
-      //   (object) => {
-      //     console.log(THREE.Cache);
-      //     this.$emit("complete");
-      //     this.matrixTurbine = object;
-      //     let mesh = object.scene;
-      //     this.mesh = mesh;
-      //     this.metal = mesh.getObjectByName("颜色材质");
-      //     this.wireframe = mesh.getObjectByName("线框材质");
-      //     this.metal.visible = false;
-      //     this.turbineAnimation = object.animations;
-      //     let scale = 0.0003 * 1;
-      //     mesh.scale.set(scale, scale, scale);
-      //     mesh.rotateX(Math.PI / 2);
-      //     mesh.rotateY(-Math.PI / 2);
-      //     const plane = object.scene.getObjectByName("polySurface136");
-      //     //   mesh.remove(plane);
-      //     this.wholeGroup.add(mesh);
-      //     mesh.position.set(0, 0, -2.7);
-      //     this.changeAnimation(mesh, "Anim_0");
-      //   },
-      //   (xhr) => this.onProgress(xhr, true)
-      // );
     },
     loadEquipment() {
-      let loader = new GLTFLoader();
-      loader.load(
-        `${process.env.BASE_URL}model/equipment.glb`,
-        (object) => {
+      loadModel({
+        draco: true,
+        url: "model/equipment.glb",
+        complete: (object) => {
           let mesh = object.scene;
           this.equipment = mesh;
           mesh.traverse((child) => {
@@ -308,18 +277,17 @@ export default {
           mesh.rotateY(-Math.PI / 2);
           this.wholeGroup.add(mesh);
           // this.wholeGroup2.add(mesh);
-
           mesh.position.set(0, 0, -2.7);
         },
-        this.onProgress
-      );
+        onprocess: (xhr) => this.onProgress(xhr),
+      });
     },
+
     loadingPlane() {
-      let loader = new GLTFLoader();
-      loader.load(
-        `${process.env.BASE_URL}model/plane.glb`,
-        (object) => {
-          // this.$dbStorage.setItem("model", object.toJSON());
+      loadModel({
+        draco: false,
+        url: `model/plane.glb`,
+        complete: (object) => {
           let mesh = object.scene;
           // this.equipment = mesh;
           let scale = 0.0003 * 1;
@@ -329,46 +297,28 @@ export default {
           this.global.scene.add(mesh);
           mesh.position.set(0, 0, -2.7);
         },
-        this.onProgress
-      );
+        onprocess: (xhr) => this.onProgress(xhr),
+      });
     },
+
     loadingOut() {
       loadModel({
         draco: true,
         url: "model/out_small.gltf",
         complete: (object) => {
-          console.log(object);
           let mesh = object.scene;
           let scale = 0.0001 * 1;
           mesh.scale.set(scale, scale, scale);
           mesh.rotateX(Math.PI / 2);
           mesh.rotateY(-Math.PI / 2);
-          mesh.visible = false;
+          mesh.visible = true;
           mesh.children[0].material.color = new THREE.Color(0, 1, 0);
           mesh.children[0].material.emissive.setHex(0x00ff00);
           this.global.scene.add(mesh);
           mesh.position.set(1.5, 0, -0.5);
         },
-        onprocess: (xhr) => this.onProgress(xhr, true),
+        onprocess: (xhr) => this.onProgress(xhr),
       });
-      // let loader = new GLTFLoader();
-      // loader.load(
-      //   `${process.env.BASE_URL}model/out.glb`,
-      //   (object) => {
-      //     let mesh = object.scene;
-      //     // this.equipment = mesh;
-      //     let scale = 0.0001 * 1;
-      //     mesh.scale.set(scale, scale, scale);
-      //     // mesh.rotateX(Math.PI / 2);
-      //     // mesh.rotateY(-Math.PI / 2);
-      //     mesh.visible = false;
-      //     mesh.children[0].material.color = new THREE.Color(0, 1, 0);
-      //     mesh.children[0].material.emissive.setHex(0x00ff00);
-      //     this.global.scene.add(mesh);
-      //     mesh.position.set(1.5, 0, -0.5);
-      //   },
-      //   this.onProgress
-      // );
     },
     //添加和改变风机旋转动画
     changeAnimation(turbine, animationName) {

@@ -18,6 +18,7 @@ const router = new VueRouter({
 });
 
 router.beforeEach((to, from, next) => {
+  // next();
   let href = window.location.href;
   let query = href.substring(href.indexOf("?") + 1);
   let vars = query.split("&");

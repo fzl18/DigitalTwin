@@ -5,7 +5,9 @@ import { RenderPass, EffectComposer, OutlinePass } from "three-outlinepass";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader";
 import { CSS2DObject } from "three/examples/jsm/renderers/CSS2DRenderer";
+import dbStorage from "./indexedDB";
 import store from "@/store/index.js";
+import { async } from "three";
 CSS2DObject;
 const cameraViewerTransfrom = (
   camera,
@@ -100,20 +102,44 @@ const playAnimationByName = (model, animationName) => {
 };
 
 const loadModel = (options) => {
-  const loader = new GLTFLoader();
-  if (options.draco) {
-    const dracoLoader = new DRACOLoader();
-    dracoLoader.setDecoderPath(`${process.env.BASE_URL}draco/gltf/`);
-    dracoLoader.setDecoderConfig({ type: "js" });
-    dracoLoader.preload();
-    loader.setDRACOLoader(dracoLoader);
-    console.log("draco");
-  }
-  loader.load(
-    `${process.env.BASE_URL}${options.url}`,
-    options.complete,
-    options.onprocess
-  );
+  const key = `${process.env.BASE_URL}${options.url}`;
+  let loader;
+  dbStorage.getItem(key.split("model/").pop()).then((res) => {
+    if (res) {
+      THREE.Cache.add(key, res);
+      const manager = new THREE.LoadingManager();
+      manager.onLoad = function() {
+        console.log("Loading complete!");
+        store.state.model.loadingComplete = true;
+      };
+      // manager.onProgress = (url, itemsLoaded, itemsTotal) => {
+      //   console.log(
+      //     "Loading file: " +
+      //       url +
+      //       ".\nLoaded " +
+      //       itemsLoaded +
+      //       " of " +
+      //       itemsTotal +
+      //       " files."
+      //   );
+      // };
+      loader = new GLTFLoader(manager);
+    } else {
+      loader = new GLTFLoader();
+    }
+    if (options.draco) {
+      let dracoLoader = new DRACOLoader();
+      dracoLoader.setDecoderPath(`${process.env.BASE_URL}draco/gltf/`);
+      dracoLoader.setDecoderConfig({ type: "js" });
+      dracoLoader.preload();
+      loader.setDRACOLoader(dracoLoader);
+    }
+    loader.load(
+      `${process.env.BASE_URL}${options.url}`,
+      options.complete,
+      options.onprocess
+    );
+  });
 };
 
 const panelHandle = (showList = []) => {

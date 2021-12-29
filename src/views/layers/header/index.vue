@@ -1,6 +1,5 @@
 <template>
   <Box animateType="fadedown" :isShow="$store.state.panel.header">
-    <div class="headerBg"></div>
     <div
       class="header"
       :style="{
@@ -37,6 +36,7 @@ export default {
   padding: 10px 5px;
   position: relative;
   z-index: 777;
+  background: #000;
   .left,
   .right {
     width: 300px;
@@ -59,13 +59,5 @@ export default {
       color: transparent;
     }
   }
-}
-.headerBg {
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.5);
-  position: absolute;
-  top: 0;
-  left: 0;
 }
 </style>

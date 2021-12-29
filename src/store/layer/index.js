@@ -24,6 +24,7 @@ export default {
     warnbgColor,
     errorbgColor,
     alarm: null,
+    popupShow: false,
   },
   mutations: {
     // setBarTitle(state, data) {

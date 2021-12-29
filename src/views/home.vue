@@ -1,9 +1,13 @@
 <template>
   <div id="home" :style="homeStyle">
     <Container class="bg" ref="container">
-      <Model ref="viewer">
-        <Layers />
-      </Model>
+      <div class="wrape" :style="wrapeStyle">
+        <Model ref="viewer">
+          <!-- <TTurebine />
+          <Effect /> -->
+          <Layers />
+        </Model>
+      </div>
     </Container>
   </div>
 </template>
@@ -12,6 +16,8 @@
 import Container from "./components/container";
 import Layers from "./layers";
 import Model from "./model";
+import TTurebine from "./model/TTurebine";
+import Effect from "./model/effect";
 import {
   dailycheck, // 今日设备点检情况
   equipmentMaintain, // 本月设备故障维修率
@@ -30,15 +36,31 @@ import {
 export default {
   data() {
     return {
-      loading: true,
+      global: {},
     };
   },
   components: {
     Container,
     Layers,
     Model,
+    TTurebine,
+    Effect,
   },
   computed: {
+    // size() {
+    //   const { sceneWidth, sceneHeight } = this.$store.state.screen;
+    //   return {
+    //     w: sceneWidth,
+    //     h: sceneHeight,
+    //   };
+    // },
+    wrapeStyle() {
+      const { width, height } = this.$store.state.screen;
+      return {
+        width: width + "px",
+        height: height + "px",
+      };
+    },
     homeStyle() {
       const {
         grayscale,
@@ -54,11 +76,7 @@ export default {
       };
     },
   },
-  mounted() {
-    this.$dbStorage.getItem("model", (err, val) => {
-      // console.log(val);
-    });
-  },
+  mounted() {},
   methods: {},
 };
 </script>
@@ -69,5 +87,10 @@ export default {
   width: 100vw;
   height: 100vh;
   overflow: hidden;
+  .wrape {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 }
 </style>

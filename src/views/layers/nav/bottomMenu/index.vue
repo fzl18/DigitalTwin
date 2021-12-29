@@ -37,6 +37,15 @@
           >
             报警
           </li>
+          <li @click="global.renderer.setSize(800, 600)">
+            窗口大小
+          </li>
+          <li @click="openWin">
+            弹窗
+          </li>
+          <li @click="clearScene">
+            清队场景
+          </li>
         </ul>
       </div>
       <div class="right">right</div>
@@ -83,6 +92,15 @@ export default {
     },
     handleRotate() {
       this.global.controls.autoRotate = !this.global.controls.autoRotate;
+    },
+    openWin() {
+      this.$store.state.layer.popupShow = true;
+    },
+    clearScene() {
+      console.log(this.global.scene);
+      // this.global.scene.visible = false
+      this.global.scene.clear();
+      this.global.renderer.dispose();
     },
   },
 };

@@ -9,6 +9,7 @@ export default {
     maskColor: "#000", // 视窗遮罩颜色
     sceneWidth: 1920, // 场景宽
     sceneHeight: 1080, // 场景高
+    modelCache: true, // 模型缓存
   },
   //动画效果设置
   animationEffect: {
