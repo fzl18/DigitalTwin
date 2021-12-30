@@ -19,9 +19,13 @@
       <BottomMenu />
     </div>
     <Popup :visible="visible">
-      <Model :size="{ w: 700, h: 700 }" :isMask="false">
-        <div>sdfsdfwefwefdd</div>
-        <TTurebine />
+      <Model
+        :size="{ w: 700, h: 700 }"
+        :isMask="false"
+        v-if="symbolList.length"
+        ref="modelViewer"
+      >
+        <Msymbol :modelList="symbolList" @progress="progress" />
       </Model>
     </Popup>
   </div>
@@ -36,10 +40,9 @@ import RightMenu from "./nav/rightMenu";
 import Panel from "./panel";
 import Popup from "../components/popup.vue";
 import Model from "../model";
-import TTurebine from "../model/TTurebine";
+import Msymbol from "../model/symbol";
 export default {
   name: "layer",
-  inject: ["global"],
   components: {
     Header,
     LeftMenu,
@@ -49,15 +52,21 @@ export default {
     Panel,
     Popup,
     Model,
-    TTurebine,
+    Msymbol,
   },
   data() {
-    return {};
-  },
-  provide() {
     return {
-      global: this.global || {},
+      symbolList: [],
     };
+  },
+  watch: {
+    visible(val) {
+      if (val) {
+        this.getsymbolLIst();
+      } else {
+        this.symbolList = [];
+      }
+    },
   },
   mounted() {},
   computed: {
@@ -78,7 +87,25 @@ export default {
       };
     },
   },
-  methods: {},
+  methods: {
+    getsymbolLIst(id) {
+      this.symbolList = [
+        {
+          name: "equipment",
+          url: "model/equipment.glb",
+          draco: true,
+          onprogress: true,
+          callback: (group) => {
+            // group.position.z = 0;
+            group.position.x = 0;
+          },
+        },
+      ];
+    },
+    progress(percent) {
+      this.$refs.modelViewer.percent = percent;
+    },
+  },
 };
 </script>
 

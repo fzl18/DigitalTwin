@@ -7,7 +7,6 @@ import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader";
 import { CSS2DObject } from "three/examples/jsm/renderers/CSS2DRenderer";
 import dbStorage from "./indexedDB";
 import store from "@/store/index.js";
-import { async } from "three";
 CSS2DObject;
 const cameraViewerTransfrom = (
   camera,
@@ -102,15 +101,17 @@ const playAnimationByName = (model, animationName) => {
 };
 
 const loadModel = (options) => {
-  const key = `${process.env.BASE_URL}${options.url}`;
+  const key = `${options.url}`;
   let loader;
-  dbStorage.getItem(key.split("model/").pop()).then((res) => {
+  dbStorage.getItem(key.split("/").pop()).then((res) => {
     if (res) {
       THREE.Cache.add(key, res);
       const manager = new THREE.LoadingManager();
       manager.onLoad = function() {
-        console.log("Loading complete!");
-        store.state.model.loadingComplete = true;
+        if (options.data.onprogress) {
+          console.log("Loading complete!");
+          store.state.model.loadingComplete = true;
+        }
       };
       // manager.onProgress = (url, itemsLoaded, itemsTotal) => {
       //   console.log(
@@ -153,6 +154,17 @@ const panelHandle = (showList = []) => {
   });
 };
 
+const onProgress = (xhr, callback) => {
+  if (xhr.loaded == xhr.total) {
+    dbStorage.setItem(
+      xhr.currentTarget.responseURL.split("/").pop(),
+      xhr.currentTarget.response
+    );
+    store.state.model.loadingComplete = true;
+  }
+  callback && callback(xhr);
+};
+
 export {
   cameraViewerTransfrom,
   twAnimation,
@@ -160,4 +172,5 @@ export {
   playAnimationByName,
   loadModel,
   panelHandle,
+  onProgress,
 };

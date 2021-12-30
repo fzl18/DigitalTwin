@@ -3,8 +3,8 @@
     <Container class="bg" ref="container">
       <div class="wrape" :style="wrapeStyle">
         <Model ref="viewer">
-          <!-- <TTurebine />
-          <Effect /> -->
+          <Msymbol :modelList="symbolList" @progress="progress" />
+          <Effect />
           <Layers />
         </Model>
       </div>
@@ -16,7 +16,7 @@
 import Container from "./components/container";
 import Layers from "./layers";
 import Model from "./model";
-import TTurebine from "./model/TTurebine";
+import Msymbol from "./model/symbol";
 import Effect from "./model/effect";
 import {
   dailycheck, // 今日设备点检情况
@@ -36,24 +36,17 @@ import {
 export default {
   data() {
     return {
-      global: {},
+      symbolList: [],
     };
   },
   components: {
     Container,
     Layers,
     Model,
-    TTurebine,
     Effect,
+    Msymbol,
   },
   computed: {
-    // size() {
-    //   const { sceneWidth, sceneHeight } = this.$store.state.screen;
-    //   return {
-    //     w: sceneWidth,
-    //     h: sceneHeight,
-    //   };
-    // },
     wrapeStyle() {
       const { width, height } = this.$store.state.screen;
       return {
@@ -76,8 +69,37 @@ export default {
       };
     },
   },
-  mounted() {},
-  methods: {},
+  mounted() {
+    this.getSymbolList();
+  },
+  methods: {
+    getSymbolList(id) {
+      this.symbolList = [
+        {
+          name: "tturebine",
+          url: "model/out_small.glb",
+          draco: true,
+          onprogress: true,
+          callback: (group) => {
+            group.position.z = -1;
+            group.position.x = 3;
+          },
+        },
+        {
+          name: "plane",
+          url: "model/plane.glb",
+          draco: true,
+          callback: (group) => {
+            console.log(group);
+            group.position.z = -3;
+          },
+        },
+      ];
+    },
+    progress(percent) {
+      this.$refs.viewer.percent = percent;
+    },
+  },
 };
 </script>
 

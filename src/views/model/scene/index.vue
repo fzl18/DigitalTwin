@@ -1,41 +1,70 @@
 <script>
 import * as THREE from "three";
+import { loadModel, onProgress } from "@/utils/action";
 export default {
-  name: "Scene",
+  name: "Mscene",
   inject: ["global"],
+  props: {
+    modelList: {
+      type: Array,
+      default: () => [
+        //   {
+        //        name,
+        //        url,
+        //        draco,
+        //        onprogress,
+        //   }
+      ],
+    },
+  },
   data() {
-    return {
-      curve: null,
-    };
+    return {};
   },
   render() {
     return null;
   },
   mounted() {
-    this.addCurve();
+    if (this.modelList.length) {
+      this.initLoad();
+    }
+  },
+  watch: {
+    modelList(data) {
+      if (data.length) {
+        this.initLoad();
+      }
+    },
   },
   methods: {
-    addCurve() {
-      const curve = new THREE.CatmullRomCurve3(
-        [
-          new THREE.Vector3(-80, -40, 0),
-          new THREE.Vector3(-70, 40, 0),
-          new THREE.Vector3(70, 40, 0),
-          new THREE.Vector3(80, -40, 0),
-        ],
-        false /*是否闭合*/
-      );
-      const curveGeometry = new THREE.BufferGeometry().setFromPoints(
-        curve.getPoints(50)
-      );
-      const material = new THREE.LineBasicMaterial({ color: 0xff0000 });
-      this.curve = new THREE.Line(curveGeometry, material);
-      const curveGroup = new THREE.Group();
-      curveGroup.add(this.curve);
-      this.global.scene.add(curveGroup);
-      curveGroup.position.set(0, 0, -1);
-      curveGroup.scale.set(0.01, 0.01, 0.01);
+    initLoad() {
+      this.modelList.map((item) => {
+        loadModel({
+          data: item,
+          draco: item.draco,
+          url: item.url,
+          complete: (object) => {
+            let group = object.scene;
+            let scale = 0.0003 * 1;
+            group.scale.set(scale, scale, scale);
+            group.rotateX(Math.PI / 2);
+            group.rotateY(-Math.PI / 2);
+            group.position.set(0, 0, -2.7);
+            group.name = item.name;
+            this.global.scene.add(group);
+            item.callback && item.callback(group);
+          },
+          onprocess: (xhr) => {
+            if (item.onprogress) {
+              onProgress(xhr, () => {
+                this.$emit("progress", (xhr.loaded / xhr.total) * 100);
+              });
+            }
+          },
+        });
+      });
     },
   },
 };
 </script>
+
+<style></style>

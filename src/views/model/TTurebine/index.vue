@@ -218,7 +218,6 @@ export default {
   },
   methods: {
     onProgress(xhr, show) {
-      console.log(xhr.currentTarget.responseURL.split("/model/").pop());
       if (xhr.loaded == xhr.total) {
         this.$dbStorage.setItem(
           xhr.currentTarget.responseURL.split("/model/").pop(),

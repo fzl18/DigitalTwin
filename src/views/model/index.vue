@@ -111,6 +111,10 @@ export default {
     screenfull() {
       screenfull.toggle();
     },
+    clearScene() {
+      //todo
+      console.log("clearScene");
+    },
   },
 };
 </script>
