@@ -9,7 +9,10 @@
         <LeftMenu />
       </div>
       <div class="center" v-if="true">
-        <div>center</div>
+        <div class="body" :style="bodyStyle">
+          body
+        </div>
+        <div class="foot">foot</div>
       </div>
       <div class="right">
         <RightMenu />
@@ -86,6 +89,12 @@ export default {
         filter: `hue-rotate(${hueRotate}deg)`,
       };
     },
+    bodyStyle() {
+      const { height, sceneHeight } = this.$store.state.screen;
+      return {
+        height: height == sceneHeight ? "100%" : sceneHeight + "px",
+      };
+    },
   },
   methods: {
     getsymbolLIst(id) {
@@ -138,7 +147,13 @@ export default {
     .center {
       width: 100%;
       display: flex;
-      justify-content: center;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: center;
+      .body {
+      }
+      .foot {
+      }
     }
     .left,
     .right {

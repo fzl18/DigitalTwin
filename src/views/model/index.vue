@@ -58,10 +58,16 @@ export default {
       return {
         width: this.size.w + "px",
         height: this.size.h + "px",
+        marginTop: this.$store.state.layer.headerHeight + "px",
       };
     },
     maskStyle() {
-      let { alarm, warnbgColor, errorbgColor } = this.$store.state.layer;
+      let {
+        alarm,
+        warnbgColor,
+        errorbgColor,
+        headerHeight,
+      } = this.$store.state.layer;
       let color;
       switch (alarm) {
         case "warn":
@@ -78,6 +84,7 @@ export default {
         backgroundImage: `radial-gradient(transparent 40%,${color})`,
         width: this.size.w + "px",
         height: this.size.h + "px",
+        top: headerHeight + "px",
       };
     },
   },

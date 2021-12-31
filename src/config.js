@@ -7,8 +7,8 @@ export default {
     fontSize: 14, //默认字体大小
     maskEnable: true, // 是否开启遮罩
     maskColor: "#000", // 视窗遮罩颜色
-    sceneWidth: 1920, // 场景宽
-    sceneHeight: 1080, // 场景高
+    sceneWidth: 1100, // 场景宽
+    sceneHeight: 600, // 场景高
     modelCache: true, // 模型缓存
   },
   //动画效果设置
@@ -29,6 +29,8 @@ export default {
     sepia: 0, // 深褐色（老照片效果）
     warnbgColor: "orange",
     errorbgColor: "red",
+    headerHeight: 60, // 顶部高度
+    sideWidth: 300, // 两侧栏
   },
   //相机配置项：
   camera: {

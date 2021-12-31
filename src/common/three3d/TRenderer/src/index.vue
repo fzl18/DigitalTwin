@@ -1,11 +1,8 @@
 <template>
   <div class="renderer" :style="rendererStyle">
     <slot></slot>
-    <div
-      class="model-container"
-      :style="{ top: -$store.state.screen.offset / 2 + 'px' }"
-    >
-      <div ref="container"></div>
+    <div class="model-container" :style="container" ref="container">
+      <!-- <div ref="container" class=""></div> -->
     </div>
   </div>
 </template>
@@ -60,6 +57,12 @@ export default {
     };
   },
   computed: {
+    container() {
+      return {
+        // top:-this.$store.state.screen.offset / 2 + 'px'
+        top: this.$store.state.layer.headerHeight + "px",
+      };
+    },
     rendererStyle() {
       return {
         width: this.size.w + "px",
@@ -111,6 +114,9 @@ export default {
 .renderer {
   .model-container {
     position: relative;
+    display: flex;
+    justify-content: center;
+    height: 100%;
   }
 }
 </style>

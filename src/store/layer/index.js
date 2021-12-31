@@ -10,6 +10,8 @@ const {
   sepia,
   warnbgColor,
   errorbgColor,
+  headerHeight,
+  sideWidth,
 } = config.layer;
 export default {
   state: {
@@ -23,6 +25,9 @@ export default {
     sepia,
     warnbgColor,
     errorbgColor,
+    headerHeight:
+      config.screen.sceneHeight == config.screen.height ? 0 : headerHeight,
+    sideWidth,
     alarm: null,
     popupShow: false,
   },
