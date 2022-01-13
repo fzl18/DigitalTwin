@@ -1,7 +1,10 @@
 <template>
   <div class="layers" :style="screenStyle">
     <div class="header-layers"><Header /></div>
-    <div class="panel">
+    <div
+      class="panel"
+      :style="{ paddingTop: $store.state.layer.headerHeight + 'px' }"
+    >
       <Panel />
     </div>
     <div class="middle-layers">
@@ -105,8 +108,10 @@ export default {
           draco: true,
           onprogress: true,
           callback: (group) => {
+            console.log(group);
             // group.position.z = 0;
-            group.position.x = 0;
+            group.position.set(0, -2.5, 0);
+            // group.scale.set(0.0001, 0.0001, 0.0001);
           },
         },
       ];
@@ -137,6 +142,11 @@ export default {
     width: 100%;
     pointer-events: auto;
     z-index: 999;
+  }
+  .panel {
+    width: 100%;
+    height: 100%;
+    position: absolute;
   }
   .middle-layers {
     pointer-events: none;

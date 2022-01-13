@@ -46,8 +46,6 @@ export default {
             let group = object.scene;
             let scale = 0.0003 * 1;
             group.scale.set(scale, scale, scale);
-            group.rotateX(Math.PI / 2);
-            group.rotateY(-Math.PI / 2);
             group.position.set(0, 0, -2.7);
             group.name = item.name;
             this.global.scene.add(group);

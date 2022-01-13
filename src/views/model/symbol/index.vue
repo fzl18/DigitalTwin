@@ -1,6 +1,6 @@
 <script>
 import * as THREE from "three";
-import { loadModel, onProgress } from "@/utils/action";
+import { loadModel, onProgress, playAnimationByName } from "@/utils/action";
 export default {
   name: "Msymbol",
   inject: ["global"],
@@ -44,11 +44,14 @@ export default {
           url: item.url,
           complete: (object) => {
             let group = object.scene;
+            if (object.animations && object.animations.length) {
+              playAnimationByName(object, this.global);
+            }
             let scale = 0.0003 * 1;
             group.scale.set(scale, scale, scale);
-            group.rotateX(Math.PI / 2);
-            group.rotateY(-Math.PI / 2);
-            group.position.set(0, 0, -2.7);
+            // group.rotateX(Math.PI / 2);
+            // group.rotateY(-Math.PI / 2);
+            group.position.set(0, 0, 0);
             group.name = item.name;
             this.global.scene.add(group);
             item.callback && item.callback(group);
@@ -58,6 +61,9 @@ export default {
               onProgress(xhr, () => {
                 this.$emit("progress", (xhr.loaded / xhr.total) * 100);
               });
+              return true;
+            } else {
+              return false;
             }
           },
         });

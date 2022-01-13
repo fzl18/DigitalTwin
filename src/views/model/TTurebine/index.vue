@@ -252,7 +252,7 @@ export default {
           mesh.position.set(0, 0, -2.7);
           this.changeAnimation(mesh, "Anim_0");
         },
-        onprocess: (xhr) => this.onProgress(xhr, true),
+        onprocess: true, // (xhr) => this.onProgress(xhr, true),
       });
     },
     loadEquipment() {
@@ -278,7 +278,7 @@ export default {
           // this.wholeGroup2.add(mesh);
           mesh.position.set(0, 0, -2.7);
         },
-        onprocess: (xhr) => this.onProgress(xhr),
+        // onprocess: (xhr) => this.onProgress(xhr),
       });
     },
 
@@ -296,7 +296,7 @@ export default {
           this.global.scene.add(mesh);
           mesh.position.set(0, 0, -2.7);
         },
-        onprocess: (xhr) => this.onProgress(xhr),
+        // onprocess: (xhr) => this.onProgress(xhr),
       });
     },
 
@@ -316,7 +316,7 @@ export default {
           this.global.scene.add(mesh);
           mesh.position.set(1.5, 0, -0.5);
         },
-        onprocess: (xhr) => this.onProgress(xhr),
+        // onprocess: (xhr) => this.onProgress(xhr),
       });
     },
     //添加和改变风机旋转动画
@@ -344,7 +344,7 @@ export default {
       const selectedObject = intersects[0].object;
       if (selectedObject.isMesh) {
         // alert();
-        // console.log(intersects[0].point);
+        console.log(intersects[0].point);
         this.outline([selectedObject]);
         this.nowLabelData = this.labelData[intersects[0].object.name];
         this.updateLabal(intersects[0]);

@@ -1,7 +1,7 @@
 <template>
   <div class="renderer" :style="rendererStyle">
     <slot></slot>
-    <div class="model-container" :style="container" ref="container">
+    <div class="model-container" ref="container" @click="handleClick">
       <!-- <div ref="container" class=""></div> -->
     </div>
   </div>
@@ -9,9 +9,11 @@
 <script>
 import { WebGLRenderer, Clock } from "three";
 import { CSS2DRenderer } from "three/examples/jsm/renderers/CSS2DRenderer";
+import { CSS3DRenderer } from "three/examples/jsm/renderers/CSS3DRenderer";
 import TWEEN from "@tweenjs/tween.js";
 import config from "@/config";
 import Loading from "../../../../views/components/loading.vue";
+import { modelClick } from "@/utils/action";
 export default {
   name: "TRenderer",
   components: {
@@ -44,6 +46,8 @@ export default {
       renderer,
       global: {
         renderer,
+        // css2d: {},
+        // css3d: {},
         rendererSize: this.size,
         rendererDom: renderer.domElement,
         scene: null,
@@ -51,6 +55,7 @@ export default {
         mixers: new Map(),
         compose: null,
         CSSRender: new CSS2DRenderer(),
+        CSS3DRender: new CSS3DRenderer(),
         config,
       },
       clock: new Clock(),
@@ -60,13 +65,14 @@ export default {
     container() {
       return {
         // top:-this.$store.state.screen.offset / 2 + 'px'
-        top: this.$store.state.layer.headerHeight + "px",
+        // top: this.$store.state.layer.headerHeight + "px",
       };
     },
     rendererStyle() {
       return {
         width: this.size.w + "px",
         height: this.size.h + "px",
+        marginTop: this.$store.state.layer.headerHeight + "px",
       };
     },
   },
@@ -78,11 +84,13 @@ export default {
         stats,
         compose,
         CSSRender,
+        CSS3DRender,
         controls,
       } = this.global;
       if (scene && camera) {
         this.renderer.render(scene, camera);
         CSSRender.render(scene, camera);
+        CSS3DRender.render(scene, camera);
       }
       stats && stats.update();
       var delta = new Clock().getDelta();
@@ -97,14 +105,30 @@ export default {
       controls.update();
       TWEEN.update();
     },
+
+    handleClick(event) {
+      const selectObj = modelClick(
+        event,
+        this.global.scene,
+        this.global,
+        this.renderer.domElement
+      );
+      if (selectObj) {
+        this.$store.state.model.curSelectModel = selectObj;
+      }
+    },
   },
   mounted() {
     const { size } = this;
-    const { CSSRender } = this.global;
+    const { CSSRender, CSS3DRender } = this.global;
     CSSRender.setSize(size.w, size.h);
     CSSRender.domElement.style.position = "absolute";
-    // CSSRender.domElement.style.top = 0;
+    CSS3DRender.setSize(size.w, size.h);
+    CSS3DRender.domElement.style.position = "absolute";
+    CSS3DRender.domElement.style.pointerEvents = "none";
+    // CSS3DRender.domElement.style.top = 0;
     this.$refs.container.appendChild(CSSRender.domElement);
+    this.$refs.container.appendChild(CSS3DRender.domElement);
     this.$refs.container.appendChild(this.renderer.domElement);
     this.render();
   },

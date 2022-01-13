@@ -69,11 +69,9 @@ export default {
     },
     play() {
       console.log(this.global.mixers);
-      this.global.mixers.get("Anim_0").timeScale = this.global.mixers.get(
+      this.global.mixers.get("Anim_0").timeScale = !this.global.mixers.get(
         "Anim_0"
-      ).timeScale
-        ? 0
-        : 1;
+      ).timeScale;
     },
   },
 };

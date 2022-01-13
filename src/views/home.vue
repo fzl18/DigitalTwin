@@ -4,6 +4,9 @@
       <div class="wrape" :style="wrapeStyle">
         <Model ref="viewer">
           <Msymbol :modelList="symbolList" @progress="progress" />
+          <!-- <TTurebine /> -->
+          <Css2D />
+          <Css3D />
           <Effect />
           <Layers />
         </Model>
@@ -17,6 +20,9 @@ import Container from "./components/container";
 import Layers from "./layers";
 import Model from "./model";
 import Msymbol from "./model/symbol";
+import Css2D from "./model/css2D";
+import Css3D from "./model/css3D";
+import TTurebine from "./model/TTurebine";
 import Effect from "./model/effect";
 import {
   dailycheck, // 今日设备点检情况
@@ -45,6 +51,9 @@ export default {
     Model,
     Effect,
     Msymbol,
+    TTurebine,
+    Css2D,
+    Css3D,
   },
   computed: {
     wrapeStyle() {
@@ -69,6 +78,11 @@ export default {
       };
     },
   },
+  watch: {
+    "$store.state.model.curSelectModel"(mesh) {
+      console.log(mesh.name);
+    },
+  },
   mounted() {
     this.getSymbolList();
   },
@@ -76,13 +90,23 @@ export default {
     getSymbolList(id) {
       this.symbolList = [
         {
-          name: "tturebine",
+          name: "out",
           url: "model/out_small.glb",
+          draco: true,
+          // onprogress: true,
+          callback: (group) => {
+            // group.position.z = -1;
+            // group.position.x = 3;
+          },
+        },
+        {
+          name: "tturebine",
+          url: "model/untitled1_small.glb",
           draco: true,
           onprogress: true,
           callback: (group) => {
-            group.position.z = -1;
-            group.position.x = 3;
+            group.position.y = -2;
+            // group.position.x = 3;
           },
         },
         {
@@ -90,8 +114,19 @@ export default {
           url: "model/plane.glb",
           draco: true,
           callback: (group) => {
+            group.position.y = -2;
+          },
+        },
+        {
+          name: "equipment",
+          url: "model/equipment.glb",
+          draco: true,
+          onprogress: true,
+          callback: (group) => {
             console.log(group);
-            group.position.z = -3;
+            // group.position.z = 0;
+            group.position.set(0, 0, 0);
+            // group.scale.set(0.0001, 0.0001, 0.0001);
           },
         },
       ];

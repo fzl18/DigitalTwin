@@ -11,7 +11,9 @@
         <div class="title">管理驾驶指挥舱</div>
         <div>Management Cockpit</div>
       </div>
-      <div class="right"><TopMenu /></div>
+      <div class="right">
+        <i class="iconfont icon-icon_qingtian"></i> <TopMenu />
+      </div>
     </div>
   </Box>
 </template>

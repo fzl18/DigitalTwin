@@ -31,7 +31,7 @@ import * as THREE from "three";
 import screenfull from "screenfull";
 import { panelHandle, cameraViewerTransfrom } from "@/utils/action.js";
 import config from "@/config";
-THREE.Object3D.DefaultUp = new THREE.Vector3(0, 0, 1);
+// THREE.Object3D.DefaultUp = new THREE.Vector3(0, 1, 0);
 export default {
   data() {
     return {
@@ -58,7 +58,7 @@ export default {
       return {
         width: this.size.w + "px",
         height: this.size.h + "px",
-        marginTop: this.$store.state.layer.headerHeight + "px",
+        // marginTop: this.$store.state.layer.headerHeight + "px",
       };
     },
     maskStyle() {
@@ -84,7 +84,7 @@ export default {
         backgroundImage: `radial-gradient(transparent 40%,${color})`,
         width: this.size.w + "px",
         height: this.size.h + "px",
-        top: headerHeight + "px",
+        // top: headerHeight + "px",
       };
     },
   },
@@ -98,14 +98,14 @@ export default {
       // this.screenfull();
       setTimeout(() => {
         panelHandle(["leftMenu", "header", "rightMenu", "bottomMenu"]);
-      }, 1800);
+      }, 3800);
       setTimeout(() => {
         const { camera, controls } = this.$refs.renderer.global;
-        let tw1 = cameraViewerTransfrom(camera, { x: 0.2, y: -5, z: 1 });
-        let tw2 = cameraViewerTransfrom(camera, { x: -0.2, y: -2, z: 0.2 });
+        let tw1 = cameraViewerTransfrom(camera, { x: 0.2, y: 1, z: 1 });
+        let tw2 = cameraViewerTransfrom(camera, { x: -0.2, y: 1, z: 2 });
         let tw3 = cameraViewerTransfrom(
           camera,
-          { x: 3.6, y: -3.4, z: 3.2 },
+          { x: 3.6, y: 1, z: 3.2 },
           () => {
             setTimeout(() => (controls.autoRotate = true), 2000);
           }

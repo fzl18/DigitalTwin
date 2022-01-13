@@ -2,8 +2,9 @@ import config from "../../config";
 export default {
   state: {
     modelCache: config.screen.modelCache, // 模型缓存
-    loadingComplete: false, //
+    loadingComplete: false, // 模型加载进度
     modelList: [],
+    curSelectModel: null, // 当前选择的模型
   },
   mutations: {
     // setBarTitle(state, data) {

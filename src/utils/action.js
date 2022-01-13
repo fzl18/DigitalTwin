@@ -42,61 +42,90 @@ const twAnimation = (
   return tween;
 };
 
-const onPointerClick = (event, obj, global) => {
+const outline = (selectedObjects, global, color = "#15c5e8") => {
+  const { renderer, camera, scene } = global;
   const [w, h] = [window.innerWidth, window.innerHeight];
-  const mouse = new THREE.Vector2();
-  const raycaster = new THREE.Raycaster();
-  mouse.x = (event.clientX / w) * 2 - 1;
-  mouse.y = -(event.clientY / h) * 2 + 1;
-  raycaster.setFromCamera(mouse, global.camera);
+  var compose = new EffectComposer(renderer);
+  var renderPass = new RenderPass(scene, camera);
+  var outlinePass = new OutlinePass(
+    new THREE.Vector2(w, h),
+    scene,
+    camera,
+    selectedObjects
+  );
+  outlinePass.renderToScreen = true;
+  outlinePass.selectedObjects = selectedObjects;
+  compose.addPass(renderPass);
+  compose.addPass(outlinePass);
+  const params = {
+    edgeStrength: 10,
+    edgeGlow: 0,
+    edgeThickness: 50.0,
+    pulsePeriod: 1,
+    usePatternTexture: false,
+  };
+  outlinePass.edgeStrength = params.edgeStrength;
+  outlinePass.edgeGlow = params.edgeGlow;
+  outlinePass.visibleEdgeColor.set(color);
+  outlinePass.hiddenEdgeColor.set(color);
+  // compose.render(scene, camera);
+  // this.$set(global, "compose", compose);
+};
+
+const modelClick = (event, obj, global, dom) => {
+  event.preventDefault();
+  // const [w, h] = [window.innerWidth, window.innerHeight];
+  // const mouse = new THREE.Vector2();
+  // mouse.x = (event.clientX / w) * 2 - 1;
+  // mouse.y = -(event.clientY / h) * 2 + 1;
+
+  // 屏幕坐标转标准设备坐标
+  let x =
+    ((event.clientX - dom.getBoundingClientRect().left) /
+      (dom.offsetWidth * store.state.index.scale)) *
+      2 -
+    1; // 标准设备横坐标
+
+  // 这里的dom是个canvas的dom元素,getBoundingClientRectangle会返回当前元素的视口大小.
+  let y =
+    -(
+      (event.clientY - dom.getBoundingClientRect().top) /
+      (dom.offsetHeight * store.state.index.scale)
+    ) *
+      2 +
+    1; // 标准设备纵坐标
+
+  let standardVector = new THREE.Vector3(x, y, 1); // 标准设备坐标
+  // 标准设备坐标转世界坐标
+  let worldVector = standardVector.unproject(global.camera);
+  // 射线投射方向单位向量(worldVector坐标减相机位置坐标)
+  let ray = worldVector.sub(global.camera.position).normalize();
+  const raycaster = new THREE.Raycaster(global.camera.position, ray);
+  // raycaster.setFromCamera(worldVector, global.camera);
   const intersects = raycaster.intersectObject(obj, true);
+  // console.log(intersects);
+
   if (intersects.length <= 0) return false;
   const selectedObject = intersects[0].object;
   if (selectedObject.isMesh) {
-    outline([selectedObject]);
+    selectedObject.material.color.set(0xff0000);
+    // outline([selectedObject], global);
     return selectedObject;
   }
-  const outline = (selectedObjects, color = "#15c5e8") => {
-    const { renderer, camera, scene } = global;
-    const [w, h] = [window.innerWidth, window.innerHeight];
-    var compose = new EffectComposer(renderer);
-    var renderPass = new RenderPass(scene, camera);
-    var outlinePass = new OutlinePass(
-      new THREE.Vector2(w, h),
-      scene,
-      camera,
-      selectedObjects
-    );
-    outlinePass.renderToScreen = true;
-    outlinePass.selectedObjects = selectedObjects;
-    compose.addPass(renderPass);
-    compose.addPass(outlinePass);
-    const params = {
-      edgeStrength: 10,
-      edgeGlow: 0,
-      edgeThickness: 50.0,
-      pulsePeriod: 1,
-      usePatternTexture: false,
-    };
-    outlinePass.edgeStrength = params.edgeStrength;
-    outlinePass.edgeGlow = params.edgeGlow;
-    outlinePass.visibleEdgeColor.set(color);
-    outlinePass.hiddenEdgeColor.set(color);
-    // compose.render(scene, camera);
-    this.$set(this.global, "compose", compose);
-  };
 };
 
-const playAnimationByName = (model, animationName) => {
-  const animations = model.animations;
-  const mixer = new THREE.AnimationMixer(model.scene);
-  const clip = THREE.AnimationClip.findByName(animations, animationName);
+// 播放动画
+const playAnimationByName = (group, global) => {
+  const animations = group.animations;
+  const animName = animations[0].name;
+  const mixer = new THREE.AnimationMixer(group.scene);
+  const clip = THREE.AnimationClip.findByName(animations, animName);
   if (clip) {
     const action = mixer.clipAction(clip);
     action.play();
-    this.global.mixers.set(animationName, mixer);
+    global.mixers.set(animName, mixer);
   } else {
-    this.global.mixers.delete(animationName);
+    global.mixers.delete(animName);
   }
 };
 
@@ -108,7 +137,7 @@ const loadModel = (options) => {
       THREE.Cache.add(key, res);
       const manager = new THREE.LoadingManager();
       manager.onLoad = function() {
-        if (options.data.onprogress) {
+        if (options.data && options.data.onprogress) {
           console.log("Loading complete!");
           store.state.model.loadingComplete = true;
         }
@@ -165,12 +194,24 @@ const onProgress = (xhr, callback) => {
   callback && callback(xhr);
 };
 
+const deleteGroup = (group) => {
+  if (!group) return;
+  // 删除掉所有的模型组内的mesh
+  group.traverse(function(item) {
+    if (item instanceof THREE.Mesh) {
+      item.geometry.dispose(); // 删除几何体
+      item.material.dispose(); // 删除材质
+    }
+  });
+};
+
 export {
   cameraViewerTransfrom,
   twAnimation,
-  onPointerClick,
+  modelClick,
   playAnimationByName,
   loadModel,
   panelHandle,
   onProgress,
+  deleteGroup,
 };
