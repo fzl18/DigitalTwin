@@ -1,6 +1,6 @@
 <template>
-  <div style="height:180px">
-    <Echart :options="options" id="Chart3" height="100%" width="5rem"></Echart>
+  <div style="height:200px">
+    <Echart :options="options" id="Chart3" height="100%" width="100%"></Echart>
   </div>
 </template>
 
@@ -37,7 +37,7 @@ export default {
             itemHeight: 8,
             top: -3,
             textStyle: {
-              fontSize: 10,
+              fontSize: 13,
             },
             data: [
               { name: "应巡", icon: "rect" },
@@ -52,7 +52,7 @@ export default {
               boundaryGap: false,
               data: newData.xAxis,
               axisLabel: {
-                fontSize: 10,
+                fontSize: 12,
                 color: "#ccc",
               },
               axisTick: {
@@ -75,7 +75,7 @@ export default {
             },
             axisLabel: {
               formatter: "{value}",
-              fontSize: 10,
+              fontSize: 12,
               color: "#ccc",
             },
           },

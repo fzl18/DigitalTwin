@@ -1,7 +1,10 @@
 <template>
   <Box :isShow="$store.state.panel.leftMenu" :delay="0.3">
-    <div class="leftMenu">
-      <div
+    <div
+      class="leftMenu"
+      :style="{ width: $store.state.layer.leftSideWidth + 'px' }"
+    >
+      <!-- <div
         v-for="(item, index) in list"
         :key="index"
         @click="command(item.action)"
@@ -10,7 +13,8 @@
         <Box :isShow="$store.state.panel.leftMenu" :delay="0.3 + index * 0.2">
           <div class="item">{{ item.name }}</div>
         </Box>
-      </div>
+      </div> -->
+      <slot />
     </div>
   </Box>
 </template>
@@ -80,20 +84,19 @@ export default {
 <style lang="scss" scoped>
 .leftMenu {
   display: flex;
-  justify-content: center;
+  // justify-content: space-between;
   flex-direction: column;
   height: 100%;
-  width: 100%;
-  padding: 20px 30px;
-  background: rgba($color: #000000, $alpha: 0.3);
-  .list {
-    .item {
-      display: block;
-      padding: 5px 15px;
-      margin: 10px;
-      border: 1px solid #fff;
-      cursor: pointer;
-    }
-  }
+  // padding: 20px 30px;
+  background: rgba(0, 0, 0, 0.349);
+  // .list {
+  //   .item {
+  //     display: block;
+  //     padding: 5px 15px;
+  //     margin: 10px;
+  //     border: 1px solid #fff;
+  //     cursor: pointer;
+  //   }
+  // }
 }
 </style>

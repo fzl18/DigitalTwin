@@ -1,7 +1,7 @@
 <template>
   <div class="panel">
-    <div class="dateTime"><DateTime /></div>
-    <div class="level"><DateTime /></div>
+    <!-- <div class="dateTime"><DateTime /></div>
+    <div class="level"><DateTime /></div> -->
   </div>
 </template>
 

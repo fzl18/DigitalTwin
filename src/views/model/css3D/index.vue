@@ -76,6 +76,10 @@ export default {
   color: #fff;
   cursor: pointer;
   position: relative;
+  border: 1px solid #fff;
+  box-shadow: 0 0 10px #e7eb17;
+  background: rgba($color: #e7eb17, $alpha: 0.2);
+  padding: 10px;
   // transform: translateX(50%);
   .title {
     border-bottom: 2px solid #e7eb17;

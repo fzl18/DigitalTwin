@@ -1,7 +1,12 @@
 <template>
   <div class="renderer" :style="rendererStyle">
     <slot></slot>
-    <div class="model-container" ref="container" @click="handleClick">
+    <div
+      class="model-container"
+      ref="container"
+      @mousemove="handleMouseMove"
+      @click="handleClick"
+    >
       <!-- <div ref="container" class=""></div> -->
     </div>
   </div>
@@ -14,6 +19,7 @@ import TWEEN from "@tweenjs/tween.js";
 import config from "@/config";
 import Loading from "../../../../views/components/loading.vue";
 import { modelClick } from "@/utils/action";
+
 export default {
   name: "TRenderer",
   components: {
@@ -106,6 +112,15 @@ export default {
       TWEEN.update();
     },
 
+    handleMouseMove(event) {
+      const selectObj = modelClick(
+        event,
+        this.global.scene,
+        this.global,
+        this.renderer.domElement
+      );
+    },
+
     handleClick(event) {
       const selectObj = modelClick(
         event,
@@ -119,8 +134,8 @@ export default {
     },
   },
   mounted() {
-    const { size } = this;
-    const { CSSRender, CSS3DRender } = this.global;
+    const { size, renderer } = this;
+    const { CSSRender, CSS3DRender, scene, camera } = this.global;
     CSSRender.setSize(size.w, size.h);
     CSSRender.domElement.style.position = "absolute";
     CSS3DRender.setSize(size.w, size.h);
@@ -136,6 +151,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 .renderer {
+  transition: none;
   .model-container {
     position: relative;
     display: flex;

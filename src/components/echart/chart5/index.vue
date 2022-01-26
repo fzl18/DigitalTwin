@@ -1,5 +1,5 @@
 <template>
-  <div class="over">
+  <div>
     <Chart :cdata="data" />
   </div>
 </template>
@@ -31,9 +31,4 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
-.over {
-  overflow: hidden;
-  height: 2.2rem;
-}
-</style>
+<style lang="scss" scoped></style>

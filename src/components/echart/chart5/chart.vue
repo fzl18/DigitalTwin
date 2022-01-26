@@ -3,8 +3,8 @@
     <Echart
       :options="options"
       id="centreLeft1Chart"
-      height="2.2rem"
-      width="2.7rem"
+      height="150px"
+      width="180px"
     ></Echart>
   </div>
 </template>
@@ -96,7 +96,7 @@ export default {
                 show: true,
                 distance: -8,
                 color: "#fff",
-                fontSize: 10,
+                fontSize: 13,
               },
               anchor: {
                 show: true,

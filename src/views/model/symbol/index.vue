@@ -1,5 +1,4 @@
 <script>
-import * as THREE from "three";
 import { loadModel, onProgress, playAnimationByName } from "@/utils/action";
 export default {
   name: "Msymbol",

@@ -87,7 +87,12 @@ export default {
 </script>
 
 <style scoped lang="scss">
-$bg: rgba(65, 58, 35, 0.9);
+$bg: linear-gradient(
+  120deg,
+  transparent,
+  rgba(252, 214, 0, 0.1),
+  rgba(230, 226, 0, 0.4)
+);
 .popup-warp {
   width: 100%;
   height: 100%;

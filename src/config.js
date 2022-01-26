@@ -1,14 +1,14 @@
 export default {
   //屏设置
   screen: {
-    backgroundColor: "#333", // 背景颜色
+    backgroundColor: "linear-gradient(#6b4815 20%,transparent ,#000)", // 背景颜色
     width: 1920, // 屏宽 用来适应各分辨率下，保持 屏宽高比
     height: 1080, //屏高 用来适应各分辨率下，保持 屏宽高比
     fontSize: 14, //默认字体大小
     maskEnable: true, // 是否开启遮罩
     maskColor: "#000", // 视窗遮罩颜色
-    sceneWidth: 1200, // 场景宽
-    sceneHeight: 800, // 场景高
+    sceneWidth: 1920, // 场景宽
+    sceneHeight: 1080, // 场景高
     modelCache: true, // 模型缓存
   },
   //动画效果设置
@@ -30,7 +30,8 @@ export default {
     warnbgColor: "orange",
     errorbgColor: "red",
     headerHeight: 60, // 顶部高度
-    sideWidth: 300, // 两侧栏
+    leftSideWidth: 340, // 左侧栏
+    rightSideWidth: 340, // 右侧栏
   },
   //相机配置项：
   camera: {

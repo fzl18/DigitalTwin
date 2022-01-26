@@ -2,11 +2,11 @@
   <div v-if="showTime.hour" class="data">
     <div class="left">
       <div class="year">
-        <!-- <img
+        <img
           src="@/assets/img/skin/blackgold/time_icon.png"
           width="110"
           alt=""
-        /> -->
+        />
         <span>{{ showTime.year }} 年</span>
       </div>
       <div class="time">
@@ -91,8 +91,8 @@ export default {
 
 <style lang="scss" scoped>
 .data {
-  margin-top: 12px;
-  width: 280px;
+  width: 100%;
+  min-width: 280px;
   height: 80px;
   display: flex;
   justify-content: space-between;

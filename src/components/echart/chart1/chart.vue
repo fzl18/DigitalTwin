@@ -4,8 +4,8 @@
     <Echart
       :options="options"
       id="pieChart"
-      height="110px"
-      width="5rem"
+      height="140px"
+      width="100%"
     ></Echart>
   </div>
 </template>
@@ -67,7 +67,7 @@ export default {
             //值
             b: {
               color: "#fff",
-              fontSize: 12,
+              fontSize: 13,
               align: "center",
               padding: [20, 0, 10, 0],
             },
@@ -302,7 +302,7 @@ export default {
 <style lang="scss" scoped>
 .pie {
   background: url("../../../assets/img/skin/blackgold/pie_bg.png") no-repeat;
-  background-position: center 32px;
+  background-position: center 45px;
   background-size: 120% 60%;
 }
 #pieChart {

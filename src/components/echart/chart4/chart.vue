@@ -4,7 +4,7 @@
       :options="options"
       id="centreLeft1Chart"
       height="100%"
-      width="5rem"
+      width="100%"
     ></Echart>
   </div>
 </template>

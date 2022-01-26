@@ -11,7 +11,8 @@ const {
   warnbgColor,
   errorbgColor,
   headerHeight,
-  sideWidth,
+  leftSideWidth,
+  rightSideWidth,
 } = config.layer;
 export default {
   state: {
@@ -27,7 +28,8 @@ export default {
     errorbgColor,
     headerHeight:
       config.screen.sceneHeight == config.screen.height ? 0 : headerHeight,
-    sideWidth,
+    leftSideWidth,
+    rightSideWidth,
     alarm: null,
     popupShow: false,
   },

@@ -3,8 +3,8 @@
     <Echart
       :options="options"
       id="centreLeft1Chart"
-      height="1.15rem"
-      width="2.5rem"
+      height="80px"
+      width="190px"
     ></Echart>
   </div>
 </template>
@@ -172,10 +172,10 @@ export default {
                 },
               ],
             },
-            this.dashedLine(200, 9, 5),
-            this.dashedLine(180, 8),
-            this.dashedLine(160, 7),
-            this.dashedLine(140, 6, 4),
+            this.dashedLine(200, 10, 3),
+            this.dashedLine(180, 20, 10),
+            this.dashedLine(160, 6, 2),
+            this.dashedLine(140, 5, 3),
             {
               type: "gauge",
               startAngle: 180,

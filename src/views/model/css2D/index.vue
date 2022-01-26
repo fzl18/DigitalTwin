@@ -61,7 +61,7 @@ export default {
     },
     handleClick(val) {
       console.log("点击了:" + val.title);
-      console.log();
+      this.$store.state.screen.backgroundColor = "#333";
     },
   },
 };

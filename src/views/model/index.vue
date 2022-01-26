@@ -52,6 +52,10 @@ export default {
       type: Boolean,
       default: true,
     },
+    autoRotate: {
+      type: Boolean,
+      default: true,
+    },
   },
   computed: {
     loadStyle() {
@@ -107,7 +111,7 @@ export default {
           camera,
           { x: 3.6, y: 1, z: 3.2 },
           () => {
-            setTimeout(() => (controls.autoRotate = true), 2000);
+            setTimeout(() => (controls.autoRotate = this.autoRotate), 2000);
           }
         );
         tw1.chain(tw2);
@@ -133,7 +137,7 @@ export default {
   z-index: 999;
   pointer-events: none;
   background-repeat: no-repeat;
-  background-size: 160% 140%;
+  background-size: 100% 100%;
   background-position: center;
   &.animation {
     animation: flash 600ms infinite;
@@ -148,7 +152,7 @@ export default {
   justify-content: center;
   flex-direction: column;
   opacity: 1;
-  transition: 1s all;
+  // transition: 1s all;
   &.open {
     opacity: 0;
     pointer-events: none;

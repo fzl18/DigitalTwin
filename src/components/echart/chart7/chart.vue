@@ -3,8 +3,8 @@
     <Echart
       :options="options"
       id="centreLeft1Chart"
-      :height="$store.state.isFullscreen ? '270px' : '190px'"
-      width="280"
+      :height="$store.state.index.isFullscreen ? '300px' : '270px'"
+      width="100%"
     ></Echart>
   </div>
 </template>
@@ -47,7 +47,7 @@ export default {
               },
             },
             axisLabel: {
-              fontSize: 10,
+              fontSize: 12,
               color: "#ccc",
             },
             // splitLine: {
@@ -71,7 +71,7 @@ export default {
               },
             },
             axisLabel: {
-              fontSize: 12,
+              fontSize: 13,
               color: "#ccc",
             },
             splitLine: {

@@ -7,7 +7,8 @@ import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader";
 import { CSS2DObject } from "three/examples/jsm/renderers/CSS2DRenderer";
 import dbStorage from "./indexedDB";
 import store from "@/store/index.js";
-CSS2DObject;
+// CSS2DObject;
+let selectedObject = null;
 const cameraViewerTransfrom = (
   camera,
   toStatus,
@@ -105,12 +106,26 @@ const modelClick = (event, obj, global, dom) => {
   const intersects = raycaster.intersectObject(obj, true);
   // console.log(intersects);
 
-  if (intersects.length <= 0) return false;
-  const selectedObject = intersects[0].object;
-  if (selectedObject.isMesh) {
-    selectedObject.material.color.set(0xff0000);
-    // outline([selectedObject], global);
-    return selectedObject;
+  if (intersects.length <= 0) {
+    if (selectedObject && selectedObject.type == "Mesh") {
+      selectedObject.material.color = selectedObject.currentColor.clone();
+      selectedObject = null;
+    }
+    return false;
+  }
+  if (selectedObject && selectedObject.type == "Mesh") {
+    selectedObject.material.color = selectedObject.currentColor.clone();
+    selectedObject = null;
+  }
+  if (!selectedObject || selectedObject.id != intersects[0].object.id) {
+    selectedObject = intersects[0].object;
+    if (selectedObject.type == "Mesh") {
+      selectedObject.currentColor = selectedObject.material.color.clone();
+      // console.log(selectedObject);
+      selectedObject.material.color.set("#f00");
+      // outline([selectedObject], global);
+      return selectedObject;
+    }
   }
 };
 

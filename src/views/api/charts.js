@@ -7,15 +7,15 @@ export function dailycheck() {
   });
 }
 
-export function equipmentMaintain() {
+export function equipmentMaintain(date) {
   return request({
-    url: `/chart/equipmentMaintain`, // 本月设备故障维修率
+    url: `/chart/equipmentMaintain?date=${date}`, // 本月设备故障维修率
     method: "get",
   });
 }
-export function equipmentWarning() {
+export function equipmentWarning(date) {
   return request({
-    url: `/chart/equipmentWarning`, // 本月设备监测预警统计
+    url: `/chart/equipmentWarning?date=${date}`, // 本月设备监测预警统计
     method: "get",
   });
 }
@@ -25,21 +25,21 @@ export function inspectioncheck() {
     method: "get",
   });
 }
-export function inspectionLineTask() {
+export function inspectionLineTask(date) {
   return request({
-    url: `/chart/inspectionLineTask`, // 本月输送线巡检任务统计
+    url: `/chart/inspectionLineTask?date=${date}`, // 本月输送线巡检任务统计
     method: "get",
   });
 }
-export function inspectionTask() {
+export function inspectionTask(date) {
   return request({
-    url: `/chart/inspectionTask`, // 本月巡检任务执行趋势
+    url: `/chart/inspectionTask?date=${date}`, // 本月巡检任务执行趋势
     method: "get",
   });
 }
-export function workOrder() {
+export function workOrder(date) {
   return request({
-    url: `/chart/workOrder`, // 本月工单按时完成率
+    url: `/chart/workOrder?date=${date}`, // 本月工单按时完成率
     method: "get",
   });
 }
