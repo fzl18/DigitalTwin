@@ -29,7 +29,11 @@
 <script>
 import * as THREE from "three";
 import screenfull from "screenfull";
-import { panelHandle, cameraViewerTransfrom } from "@/utils/action.js";
+import {
+  panelHandle,
+  cameraViewerTransfrom,
+  twAnimation,
+} from "@/utils/action.js";
 import config from "@/config";
 // THREE.Object3D.DefaultUp = new THREE.Vector3(0, 1, 0);
 export default {
@@ -104,7 +108,7 @@ export default {
         panelHandle(["leftMenu", "header", "rightMenu", "bottomMenu"]);
       }, 3800);
       setTimeout(() => {
-        const { camera, controls } = this.$refs.renderer.global;
+        const { camera, controls, scene } = this.$refs.renderer.global;
         let tw1 = cameraViewerTransfrom(camera, { x: 0.2, y: 1, z: 1 });
         let tw2 = cameraViewerTransfrom(camera, { x: -0.2, y: 1, z: 2 });
         let tw3 = cameraViewerTransfrom(
@@ -114,10 +118,27 @@ export default {
             setTimeout(() => (controls.autoRotate = this.autoRotate), 2000);
           }
         );
+        console.log(scene);
+        let floor = scene.getObjectByName("processed").getObjectByName("地面")
+          .position;
+        let tw4 = twAnimation(
+          floor,
+          { x: 0, y: 10000, z: 0 },
+          5500,
+          (data) => {
+            floor.set(data.x, data.y, data.z);
+          },
+          () => {
+            this.$store.state.layer.css2DShow = true;
+            this.$store.state.layer.css3DShow = true;
+          },
+          false
+        );
         tw1.chain(tw2);
         tw2.chain(tw3);
+        tw3.chain(tw4);
         tw1.start();
-      }, 2200);
+      }, 6200);
     },
     screenfull() {
       screenfull.toggle();

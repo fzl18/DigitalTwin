@@ -1,7 +1,7 @@
 export default {
   state: {
     on1: false,
-    on2: false,
+    on2: true,
     barInfo: {
       title: "",
       leftText: "返回",

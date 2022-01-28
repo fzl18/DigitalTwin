@@ -32,6 +32,8 @@ export default {
     rightSideWidth,
     alarm: null,
     popupShow: false,
+    css2DShow: false,
+    css3DShow: false,
   },
   mutations: {
     // setBarTitle(state, data) {

@@ -85,9 +85,9 @@
             :isShow="$store.state.panel.header"
             :delay="0.8"
           >
-            <div>
+            <div style="width:1165px">
               <Nav ref="nav" />
-              <News ref="news" :data="newsData" />
+              <News ref="news" :data="newsData" style="margin-left:35px" />
             </div>
           </Box>
         </div>
@@ -208,6 +208,7 @@ import {
 } from "../api/monitorLine";
 export default {
   name: "layer",
+  inject: ["global"],
   components: {
     Header,
     ToptMenu,

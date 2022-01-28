@@ -4,8 +4,8 @@
       <div class="wrape" :style="wrapeStyle">
         <Model ref="viewer">
           <Msymbol :modelList="symbolList" @progress="progress" />
-          <Css2D />
-          <Css3D />
+          <Css2D v-if="$store.state.layer.css2DShow" />
+          <Css3D v-if="$store.state.layer.css3DShow" />
           <Effect />
           <Layers />
         </Model>
@@ -74,18 +74,19 @@ export default {
     getSymbolList(id) {
       this.symbolList = [
         {
-          // name: "out",
-          // url: "model/out_small.glb",
-          // draco: true,
-          // // onprogress: true,
-          // callback: (group) => {
-          //   // group.position.z = -1;
-          //   // group.position.x = 3;
-          // },
+          name: "processed",
+          url: "model/1-processed.glb",
+          draco: true,
+          // onprogress: true,
+          callback: (group) => {
+            // group.position.z = -1;
+            // group.position.x = 3;
+            group.scale.set(0.001, 0.001, 0.001);
+          },
         },
         // {
         //   name: "tturebine",
-        //   url: "model/gltf1.glb",
+        //   url: "model/untitled1_small.glb",
         //   draco: true,
         //   onprogress: true,
         //   callback: (group) => {
@@ -101,17 +102,17 @@ export default {
         //     group.position.y = -2;
         //   },
         // },
-        // {
-        //   name: "equipment",
-        //   url: "model/equipment.glb",
-        //   draco: true,
-        //   onprogress: true,
-        //   callback: (group) => {
-        //     // group.position.z = 0;
-        //     group.position.set(0, -3, 0);
-        //     // group.scale.set(0.0001, 0.0001, 0.0001);
-        //   },
-        // },
+        {
+          name: "equipment",
+          url: "model/equipment.glb",
+          draco: true,
+          onprogress: true,
+          callback: (group) => {
+            // group.position.z = 0;
+            // group.position.set(0, -3, 0);
+            // group.scale.set(0.0001, 0.0001, 0.0001);
+          },
+        },
       ];
     },
     progress(percent) {

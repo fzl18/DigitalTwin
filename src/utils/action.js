@@ -122,7 +122,7 @@ const modelClick = (event, obj, global, dom) => {
     if (selectedObject.type == "Mesh") {
       selectedObject.currentColor = selectedObject.material.color.clone();
       // console.log(selectedObject);
-      selectedObject.material.color.set("#f00");
+      // selectedObject.material.color.set("#f00");
       // outline([selectedObject], global);
       return selectedObject;
     }

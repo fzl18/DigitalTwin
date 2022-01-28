@@ -46,7 +46,7 @@ export default {
   },
   data() {
     let renderer = new WebGLRenderer({ antialias: true, alpha: true });
-    renderer.shadowMap.enabled = true;
+    // renderer.shadowMap.enabled = true;
     renderer.setSize(this.size.w, this.size.h);
     return {
       renderer,
@@ -113,12 +113,12 @@ export default {
     },
 
     handleMouseMove(event) {
-      const selectObj = modelClick(
-        event,
-        this.global.scene,
-        this.global,
-        this.renderer.domElement
-      );
+      // const selectObj = modelClick(
+      //   event,
+      //   this.global.scene,
+      //   this.global,
+      //   this.renderer.domElement
+      // );
     },
 
     handleClick(event) {

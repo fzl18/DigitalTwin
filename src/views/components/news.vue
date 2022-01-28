@@ -65,6 +65,8 @@ export default {
 
 <style lang="scss" scoped>
 .newbar {
+  width: 100%;
+  overflow: hidden;
   display: flex;
   align-items: center;
   .news {
