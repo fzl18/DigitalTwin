@@ -58,7 +58,7 @@
                   <div class="leftsort">
                     <div>左列</div>
                     <Draggable
-                      v-model="$store.state.leftChartsItem"
+                      v-model="$store.state.index.leftChartsItem"
                       group="site"
                       animation="300"
                       dragClass="dragClass"
@@ -66,12 +66,14 @@
                       chosenClass="chosenClass"
                     >
                       <transition-group>
-                        <template v-for="item in $store.state.leftChartsItem">
+                        <template
+                          v-for="item in $store.state.index.leftChartsItem"
+                        >
                           <div
                             class="item"
                             :key="item"
                             :class="item"
-                            v-if="$store.state[`${item}On`]"
+                            v-if="$store.state.index[`${item}On`]"
                           >
                             <span>{{ chartName(item) }}</span>
                           </div>
@@ -82,7 +84,7 @@
                   <div class="rightsort">
                     <div>右列</div>
                     <Draggable
-                      v-model="$store.state.rightChartsItem"
+                      v-model="$store.state.index.rightChartsItem"
                       group="site"
                       animation="100"
                       dragClass="dragClass"
@@ -90,12 +92,14 @@
                       chosenClass="chosenClass"
                     >
                       <transition-group>
-                        <template v-for="item in $store.state.rightChartsItem">
+                        <template
+                          v-for="item in $store.state.index.rightChartsItem"
+                        >
                           <div
                             class="item"
                             :key="item"
                             :class="item"
-                            v-if="$store.state[`${item}On`]"
+                            v-if="$store.state.index[`${item}On`]"
                           >
                             <span>{{ chartName(item) }}</span>
                           </div>
@@ -110,7 +114,7 @@
                 <div class="ls" v-for="(item, index) in chartList" :key="index">
                   <span>{{ item }}</span>
                   <el-switch
-                    v-model="$store.state[`chart${index + 1}On`]"
+                    v-model="$store.state.index[`chart${index + 1}On`]"
                     active-color="#ad964f"
                     inactive-color="#999"
                   >
@@ -210,25 +214,25 @@ export default {
     },
 
     rest() {
-      this.$store.state.leftChartsItem = [
+      this.$store.state.index.leftChartsItem = [
         "chart1",
         "chart2",
         "chart3",
         "chart4",
       ];
-      this.$store.state.rightChartsItem = ["chart5", "chart6", "chart7"];
+      this.$store.state.index.rightChartsItem = ["chart5", "chart6", "chart7"];
     },
     save() {
-      const { leftChartsItem, rightChartsItem } = this.$store.state;
+      const { leftChartsItem, rightChartsItem } = this.$store.state.index;
       const chartListLeft = [],
         chartListRight = [];
       leftChartsItem.map((item) => {
-        let isShow = this.$store.state[`${item}On`] ? 1 : 0;
+        let isShow = this.$store.state.index[`${item}On`] ? 1 : 0;
         item = item + `|${isShow}`;
         chartListLeft.push(item);
       });
       rightChartsItem.map((item) => {
-        let isShow = this.$store.state[`${item}On`] ? 1 : 0;
+        let isShow = this.$store.state.index[`${item}On`] ? 1 : 0;
         item = item + `|${isShow}`;
         chartListRight.push(item);
       });
@@ -576,6 +580,128 @@ export default {
           align-items: center;
           font-size: 13px;
         }
+      }
+    }
+  }
+}
+.list {
+  padding: 0.2rem;
+  padding-top: 0;
+  .title {
+    text-align: center;
+    overflow: hidden;
+    margin-bottom: 0.6rem;
+    span {
+      color: #ffebc6;
+      background: #ad964f;
+      font-size: 16px;
+      padding: 0.2rem 0.4rem;
+      display: inline-block;
+      &.tip {
+        background: none;
+        padding: 0;
+        margin-left: 0.2rem;
+        font-size: 12px !important;
+      }
+    }
+  }
+  .item {
+    margin: 0.4rem;
+    font-size: 13px;
+  }
+  span.restBtn {
+    text-align: center;
+    padding: 0.08rem 0.2rem;
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px solid #ad964f;
+    color: #ffebc6;
+    font-size: 13px;
+    cursor: pointer;
+    margin-left: 0.5rem;
+  }
+  .setting {
+    display: flex;
+    padding: 0.2rem;
+    .title {
+      font-size: 15px;
+    }
+    .left {
+      width: 75%;
+      max-height: 500px;
+      overflow-y: auto;
+      &::-webkit-scrollbar {
+        width: 6px;
+        background-color: #f5f5f5;
+        border-radius: 20px;
+      }
+      &::-webkit-scrollbar-thumb {
+        background-color: #ad964f;
+        border-radius: 20px;
+      }
+      .sort {
+        display: flex;
+        justify-content: space-evenly;
+        text-align: center;
+        .leftsort,
+        .rightsort {
+          min-height: 2rem;
+        }
+        .item {
+          cursor: move;
+          padding: 0;
+          margin: 0.2rem;
+          border: 1px solid #ad964f;
+          width: 160px;
+          height: 100px;
+          background-size: 100% 100% !important;
+          span {
+            display: block;
+            background: rgba(0, 0, 0, 1);
+            color: rgba(255, 255, 255, 1);
+            font-size: 12px;
+          }
+          &.chart1 {
+            background: #000
+              url("../../../../assets/img/skin/blackgold/chart1.jpg") no-repeat;
+          }
+          &.chart2 {
+            background: #000
+              url("../../../../assets/img/skin/blackgold/chart2.jpg") no-repeat;
+          }
+          &.chart3 {
+            background: #000
+              url("../../../../assets/img/skin/blackgold/chart3.jpg") no-repeat;
+          }
+          &.chart4 {
+            background: #000
+              url("../../../../assets/img/skin/blackgold/chart4.jpg") no-repeat;
+          }
+          &.chart5 {
+            background: #000
+              url("../../../../assets/img/skin/blackgold/chart5.jpg") no-repeat;
+          }
+          &.chart6 {
+            background: #000
+              url("../../../../assets/img/skin/blackgold/chart6.jpg") no-repeat;
+          }
+          &.chart7 {
+            background: #000
+              url("../../../../assets/img/skin/blackgold/chart7.jpg") no-repeat;
+          }
+        }
+      }
+    }
+    .right {
+      border-left: 1px solid #ad964f;
+      padding-left: 0.2rem;
+      width: 25%;
+
+      .ls {
+        margin: 0.25rem 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 13px;
       }
     }
   }

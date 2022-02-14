@@ -2,7 +2,7 @@
   <div class="layers" :style="screenStyle">
     <div class="header-layers">
       <!-- <Header /> -->
-      <ToptMenu />
+      <ToptMenu ref="topmenu" />
     </div>
     <div
       class="panel"
@@ -69,6 +69,13 @@
       </div>
       <div class="center" v-if="true">
         <div class="body" :style="bodyStyle">
+          <div class="map" v-if="$store.state.index.curObjLevel !== 4">
+            <World ref="world" />
+            <Country ref="country" />
+            <Province ref="province" />
+            <Citys ref="citys" />
+          </div>
+
           <!-- <div class="map" v-if="show">
             <Model
               :size="{ w: 1920, h: 1080 }"
@@ -182,6 +189,10 @@ import Msymbol from "../model/symbol";
 // import js from "../model/GeoJsonMap/mapData/jiangsu.json";
 // import wx from "../model/GeoJsonMap/mapData/wuxi.json";
 import { login } from "../api/user";
+import World from "../world.vue";
+import Country from "../country.vue";
+import Province from "../province.vue";
+import Citys from "../citys.vue";
 import Nav from "../components/nav";
 import News from "../components/news";
 import DateTime from "../components/dateTime.vue";
@@ -208,7 +219,7 @@ import {
 } from "../api/monitorLine";
 export default {
   name: "layer",
-  inject: ["global"],
+  // inject: ["global"],
   components: {
     Header,
     ToptMenu,
@@ -224,6 +235,10 @@ export default {
     DateTime,
     Nav,
     News,
+    World,
+    Province,
+    Citys,
+    Country,
     chart1,
     chart2,
     chart3,
@@ -282,9 +297,10 @@ export default {
     },
   },
   mounted() {
-    this.$store.state.index.curObjLevel = 1;
+    // this.$store.state.index.curObjLevel = 4;
     // this.map = js;
     // this.show = true;
+    this.getChartsData(true);
 
     query(this.$store.state.userinfo.userCode).then((res) => {
       if (res.data) {
@@ -518,12 +534,14 @@ export default {
       justify-content: flex-start;
       align-items: center;
       .body {
+        width: 100%;
         .map {
           pointer-events: auto;
           position: relative;
         }
       }
       .foot {
+        background: rgba(0, 0, 0, 0.521);
         margin-bottom: 10px;
         pointer-events: auto;
       }

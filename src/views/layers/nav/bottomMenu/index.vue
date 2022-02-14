@@ -57,7 +57,7 @@
 <script>
 export default {
   name: "bottomMenu",
-  inject: ["global"],
+  // inject: ["global"],
   data() {
     return {
       list: [
@@ -82,26 +82,26 @@ export default {
   },
   mounted() {},
   methods: {
-    toggle() {
-      const { panel } = this.$store.state;
-      panel.leftMenu = !panel.leftMenu;
-      panel.rightMenu = !panel.rightMenu;
-    },
-    handlePosition() {
-      console.log(this.global.camera.position);
-    },
-    handleRotate() {
-      this.global.controls.autoRotate = !this.global.controls.autoRotate;
-    },
-    openWin() {
-      this.$store.state.layer.popupShow = true;
-    },
-    clearScene() {
-      console.log(this.global.scene);
-      // this.global.scene.visible = false
-      this.global.scene.clear();
-      this.global.renderer.dispose();
-    },
+    // toggle() {
+    //   const { panel } = this.$store.state;
+    //   panel.leftMenu = !panel.leftMenu;
+    //   panel.rightMenu = !panel.rightMenu;
+    // },
+    // handlePosition() {
+    //   console.log(this.global.camera.position);
+    // },
+    // handleRotate() {
+    //   this.global.controls.autoRotate = !this.global.controls.autoRotate;
+    // },
+    // openWin() {
+    //   this.$store.state.layer.popupShow = true;
+    // },
+    // clearScene() {
+    //   console.log(this.global.scene);
+    //   // this.global.scene.visible = false
+    //   this.global.scene.clear();
+    //   this.global.renderer.dispose();
+    // },
   },
 };
 </script>

@@ -29,7 +29,7 @@ export default {
     sepia: 0, // 深褐色（老照片效果）
     warnbgColor: "orange",
     errorbgColor: "red",
-    headerHeight: 60, // 顶部高度
+    headerHeight: 80, // 顶部高度
     leftSideWidth: 340, // 左侧栏
     rightSideWidth: 340, // 右侧栏
   },
@@ -42,7 +42,7 @@ export default {
     autoRotate: false, // 是否自动旋转
     autoRotateSpeed: 1.0, // 自动旋转速度
     minDistance: 1, // 设置相机距离原点的最小距离
-    maxDistance: 20, // 设置相机距离原点的最远距离
+    maxDistance: 30, // 设置相机距离原点的最远距离
     enablePan: true, // 是否开启右键拖拽
     maxPolarAngle: Math.PI,
     enableKeys: true, // 启用键盘控制

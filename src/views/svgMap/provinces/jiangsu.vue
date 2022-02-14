@@ -155,13 +155,13 @@ export default {
   methods: {
     goto(name, isFactory = false) {
       if (isFactory) {
-        this.$store.state.curFactory = name;
-        this.$store.state.curObjLevel = 4;
+        this.$store.state.index.curFactory = name;
+        this.$store.state.index.curObjLevel = 4;
       } else {
-        this.$store.state.curCity = name;
-        this.$store.state.curObjLevel = 3;
+        this.$store.state.index.curCity = name;
+        this.$store.state.index.curObjLevel = 3;
       }
-      this.$store.state.zoomlevel = this.$store.state.defaultZoomLevel;
+      this.$store.state.index.zoomlevel = this.$store.state.index.defaultZoomLevel;
     },
   },
 };
@@ -222,7 +222,7 @@ svg {
       top: -8px;
       width: 27px;
       height: 47px;
-      background: url("../../assets/img/skin/blackgold/dot.png") no-repeat;
+      background: url("../../../assets/img/skin/blackgold/dot.png") no-repeat;
       cursor: pointer;
       animation: jump 2s linear infinite;
     }
@@ -234,7 +234,7 @@ svg {
       top: -22px;
       width: 223px;
       height: 48px;
-      background: url("../../assets/img/skin/blackgold/light.png") no-repeat;
+      background: url("../../../assets/img/skin/blackgold/light.png") no-repeat;
       pointer-events: none;
       animation: light 2s linear infinite;
       transform-origin: 60% center;

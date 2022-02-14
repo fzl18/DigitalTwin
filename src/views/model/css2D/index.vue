@@ -1,7 +1,11 @@
 <template>
   <div class="css2d">
     <div
-      :class="['label', item.type]"
+      :class="[
+        'label',
+        $store.state.layer.css3DShow ? 'show' : 'hide',
+        item.type,
+      ]"
       v-for="(item, index) in objList"
       :key="item.title + '_' + index"
       :style="item.style"
@@ -25,14 +29,14 @@ export default {
         {
           target: "",
           title: "标题1",
-          type: "dew",
+          type: "",
           params: "内容",
           style: {},
         },
         {
           target: "",
           title: "标题2",
-          type: "类型",
+          type: "",
           params: "内容",
           style: {},
         },
@@ -73,5 +77,11 @@ export default {
   font-size: 14px;
   position: relative;
   cursor: pointer;
+  &.show {
+    display: block;
+  }
+  &.hide {
+    display: none;
+  }
 }
 </style>

@@ -57,7 +57,9 @@ export default {
   methods: {
     init() {},
     open() {
-      this.$root.$children[0].$children[0].$refs.head.handleOpen("messages");
+      this.$parent.$parent.$refs.topmenu.handleOpen("messages");
+      // console.log(this.$root.$children[0].$children[0].$refs.layer);
+      // this.$root.$children[0].$children[0].$refs.head.handleOpen("messages");
     },
   },
 };

@@ -21,7 +21,7 @@
 <script>
 export default {
   name: "rightMenu",
-  inject: ["global"],
+  // inject: ["global"],
   data() {
     return {};
   },
@@ -36,7 +36,7 @@ export default {
 
 <style lang="scss" scoped>
 .rightMenu {
-  background: #000;
+  background: rgba(0, 0, 0, 0.349);
   height: 100%;
   width: 100%;
   display: flex;

@@ -2,6 +2,8 @@ import Vue from "vue";
 import App from "./App.vue";
 import router from "./router";
 import store from "./store";
+import ElementUI from "element-ui";
+import "element-ui/lib/theme-chalk/index.css";
 // 适配flex
 import "@/common/flexible.js";
 // 引入全局css
@@ -13,6 +15,7 @@ import blockBox from "./views/components/blockBox.vue";
 import three3d from "./common/three3d/index";
 import loading from "./views/components/loading";
 import dbStorage from "./utils/indexedDB";
+Vue.use(ElementUI);
 Vue.use(three3d);
 Vue.component("Box", box);
 Vue.component("Block", blockBox);

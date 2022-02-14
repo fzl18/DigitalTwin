@@ -2,13 +2,14 @@
   <div id="home">
     <Container class="bg" ref="container" :style="homeStyle">
       <div class="wrape" :style="wrapeStyle">
-        <Model ref="viewer">
+        <Model ref="viewer" v-if="$store.state.index.curObjLevel == 4">
           <Msymbol :modelList="symbolList" @progress="progress" />
-          <Css2D v-if="$store.state.layer.css2DShow" />
-          <Css3D v-if="$store.state.layer.css3DShow" />
-          <Effect />
-          <Layers />
+          <Css2D />
+          <Css3D />
+          <ModelPanel />
+          <!-- <Effect /> -->
         </Model>
+        <Layers ref="layer" />
       </div>
     </Container>
   </div>
@@ -17,6 +18,7 @@
 <script>
 import Container from "./components/container";
 import Layers from "./layers";
+import ModelPanel from "./layers/panel/modelPanel.vue";
 import Model from "./model";
 import Msymbol from "./model/symbol";
 import Css2D from "./model/css2D";
@@ -37,6 +39,7 @@ export default {
     Msymbol,
     Css2D,
     Css3D,
+    ModelPanel,
   },
   computed: {
     wrapeStyle() {
@@ -75,13 +78,14 @@ export default {
       this.symbolList = [
         {
           name: "processed",
-          url: "model/1-processed.glb",
-          draco: true,
+          url: "model/1.gltf",
+          draco: false,
           // onprogress: true,
           callback: (group) => {
             // group.position.z = -1;
             // group.position.x = 3;
             group.scale.set(0.001, 0.001, 0.001);
+            group.visible = false;
           },
         },
         // {
@@ -94,22 +98,23 @@ export default {
         //     // group.position.x = 3;
         //   },
         // },
-        // {
-        //   name: "plane",
-        //   url: "model/plane.glb",
-        //   draco: true,
-        //   callback: (group) => {
-        //     group.position.y = -2;
-        //   },
-        // },
+        {
+          name: "line",
+          url: "model/line.gltf",
+          draco: false,
+          callback: (group) => {
+            // group.position.y = -2;
+            group.scale.set(0.005, 0.005, 0.005);
+          },
+        },
         {
           name: "equipment",
           url: "model/equipment.glb",
           draco: true,
           onprogress: true,
           callback: (group) => {
-            // group.position.z = 0;
-            // group.position.set(0, -3, 0);
+            group.position.z = 0;
+            group.position.set(-6, -9, -6);
             // group.scale.set(0.0001, 0.0001, 0.0001);
           },
         },
@@ -135,6 +140,13 @@ export default {
     display: flex;
     align-items: flex-start;
     justify-content: center;
+    .button {
+      position: absolute;
+      top: 50%;
+      right: 350px;
+      z-index: 10;
+      color: #fff;
+    }
   }
 }
 </style>

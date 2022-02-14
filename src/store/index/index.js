@@ -8,7 +8,7 @@ export default {
     step: 0.1, // 缩放步长
     loading: true, // 加载状态
     defaultObjLevel: 4, // 默认层级
-    curObjLevel: null, // 当前操作层级
+    curObjLevel: 0, // 当前操作层级
     curCity: "",
     curProvince: "",
     curCountry: "",

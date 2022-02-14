@@ -1,15 +1,12 @@
 <template>
   <div class="panel">
-    <!-- <div class="dateTime"><DateTime /></div>
-    <div class="level"><DateTime /></div> -->
+    sdfefsdfefe
   </div>
 </template>
 
 <script>
-import DateTime from "../../components/dateTime.vue";
 export default {
   name: "Panel",
-  components: { DateTime },
   computed: {},
   mounted() {},
 };
@@ -27,10 +24,6 @@ export default {
   height: 100%;
   & > div {
     position: absolute;
-  }
-  .dateTime {
-    right: 0;
-    top: 20%;
   }
   .level {
     top: 50%;

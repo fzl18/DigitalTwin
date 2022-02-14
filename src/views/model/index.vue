@@ -21,7 +21,6 @@
     <t-scene></t-scene>
     <t-controls></t-controls>
     <t-light></t-light>
-    <!-- <t-raycaster></t-raycaster> -->
     <t-stats v-if="$store.state.navBar.on2"></t-stats>
     <slot></slot>
   </t-renderer>
@@ -115,28 +114,30 @@ export default {
           camera,
           { x: 3.6, y: 1, z: 3.2 },
           () => {
-            setTimeout(() => (controls.autoRotate = this.autoRotate), 2000);
+            // setTimeout(() => (controls.autoRotate = this.autoRotate), 2000);
+            // this.$store.state.layer.css2DShow = true;
+            // this.$store.state.layer.css3DShow = true;
           }
         );
-        console.log(scene);
-        let floor = scene.getObjectByName("processed").getObjectByName("地面")
-          .position;
-        let tw4 = twAnimation(
-          floor,
-          { x: 0, y: 10000, z: 0 },
-          5500,
-          (data) => {
-            floor.set(data.x, data.y, data.z);
-          },
-          () => {
-            this.$store.state.layer.css2DShow = true;
-            this.$store.state.layer.css3DShow = true;
-          },
-          false
-        );
+        // console.log(scene);
+        // let floor = scene.getObjectByName("processed").getObjectByName("地面")
+        //   .position;
+        // let tw4 = twAnimation(
+        //   floor,
+        //   { x: 0, y: 10000, z: 0 },
+        //   5500,
+        //   (data) => {
+        //     floor.set(data.x, data.y, data.z);
+        //   },
+        //   () => {
+        //     this.$store.state.layer.css2DShow = true;
+        //     this.$store.state.layer.css3DShow = true;
+        //   },
+        //   false
+        // );
         tw1.chain(tw2);
         tw2.chain(tw3);
-        tw3.chain(tw4);
+        // tw3.chain(tw4);
         tw1.start();
       }, 6200);
     },

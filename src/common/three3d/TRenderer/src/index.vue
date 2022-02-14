@@ -122,6 +122,7 @@ export default {
     },
 
     handleClick(event) {
+      return;
       const selectObj = modelClick(
         event,
         this.global.scene,

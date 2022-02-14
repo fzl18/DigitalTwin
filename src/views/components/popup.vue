@@ -6,7 +6,7 @@
     :class="[isAddClass ? 'bindata-popup-open' : 'bindata-popup-close']"
   >
     <div
-      :style="`transform:scale(${$store.state.scale + 0.1})`"
+      :style="`transform:scale(${$store.state.index.scale + 0.1})`"
       class="popup-card"
       :class="isAddClass ? 'popup-card-open' : 'popup-card-close'"
     >
@@ -14,20 +14,29 @@
         <div class="popup-head-title">
           <slot name="head"></slot>
         </div>
-        <i class="bindata-btn-close" @click="hide">×</i>
+        <i class="el-icon-close bindata-btn-close" @click="hide"></i>
       </div>
-      <div :class="[$store.state.isFullscreen ? 'h110' : 'h55', 'popup-body']">
+      <div
+        :class="[
+          $store.state.index.isFullscreen ? 'h110' : 'h55',
+          'popup-body',
+        ]"
+      >
         <div class="horn tl"></div>
         <div class="horn tr"></div>
         <div class="horn bl"></div>
         <div class="horn br"></div>
         <div class="popup-body-title"></div>
         <slot />
-        <i v-if="!$slots.head" class="bindata-btn-close" @click="hide">×</i>
+        <i
+          v-if="!$slots.head"
+          class="el-icon-close bindata-btn-close"
+          @click="hide"
+        ></i>
       </div>
 
       <div v-if="$slots.footer" class="popup-footer">
-        <slot name="footer" />
+        <slot name="footer"></slot>
       </div>
     </div>
   </div>
@@ -50,7 +59,7 @@ export default {
     },
     appendToBody: {
       type: Boolean,
-      default: () => false,
+      default: () => true,
     },
   },
   data() {
@@ -78,8 +87,7 @@ export default {
     hide() {
       this.isAddClass = false;
       setTimeout(() => {
-        // this.$emit("update:visible", false);
-        this.$store.state.layer.popupShow = false;
+        this.$emit("update:visible", false);
       }, 700);
     },
   },
@@ -87,36 +95,23 @@ export default {
 </script>
 
 <style scoped lang="scss">
-$bg: linear-gradient(
-  120deg,
-  transparent,
-  rgba(252, 214, 0, 0.1),
-  rgba(230, 226, 0, 0.4)
-);
+$bg: rgba(65, 58, 35, 0.9);
 .popup-warp {
   width: 100%;
-  height: 100%;
+  height: 1080px;
+  position: fixed;
+  top: 7.2%;
+  right: 0;
   z-index: 99999;
-  position: absolute;
-  top: 0;
-  left: 0;
   color: #333333;
   display: flex;
   justify-content: center;
   align-items: center;
-  pointer-events: auto;
-  &.bindata-popup-close {
-    pointer-events: none;
-  }
 }
 .popup-card {
-  display: flex;
-  justify-content: center;
-  align-items: center;
   transform-origin: center top;
   color: #fff;
   height: 100%;
-  width: 100%;
   box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
   border-radius: 2px;
   .popup-head {
@@ -124,7 +119,7 @@ $bg: linear-gradient(
     width: 1200px;
     max-width: 1200px;
     // min-width: 80%;
-    height: 100%;
+    height: 1.4rem;
     display: flex;
     // align-items: center;
     padding: 0 15px;
@@ -149,20 +144,18 @@ $bg: linear-gradient(
       font-size: 16px;
     }
     .bindata-btn-close {
-      font-size: 20px;
+      font-size: 16px;
       cursor: pointer;
       color: rgb(243, 201, 124);
       background: rgb(128, 109, 54);
       border: 1px solid rgb(175, 148, 66);
       border-radius: 50%;
+      padding: 3px;
       position: relative;
       top: -0.2rem;
       right: -1rem;
       height: 25px;
       width: 25px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
       &:hover {
         color: rgb(255, 249, 191);
       }
@@ -174,8 +167,8 @@ $bg: linear-gradient(
     box-shadow: 0 0 80px rgba(56, 50, 44, 0.5) inset;
     // padding: 15px;
     border: 1px solid #5f4315;
-    width: 80%;
-    max-width: 90%;
+    width: 1200px;
+    max-width: 1200px;
     margin: 0.2rem auto;
     position: relative;
     .horn {
@@ -223,21 +216,19 @@ $bg: linear-gradient(
       }
     }
     .bindata-btn-close {
-      font-size: 20px;
+      font-size: 16px;
       cursor: pointer;
       color: rgb(243, 201, 124);
       background: rgb(128, 109, 54);
       border: 1px solid rgb(175, 148, 66);
       border-radius: 50%;
+      padding: 3px;
       position: absolute;
       top: -10px;
       right: -10px;
       height: 25px;
       width: 25px;
       z-index: 999;
-      display: flex;
-      justify-content: center;
-      align-items: center;
       &:hover {
         color: rgb(255, 249, 191);
       }
@@ -254,15 +245,16 @@ $bg: linear-gradient(
     justify-content: flex-end;
   }
   .h55 {
-    height: 80%;
+    height: calc(100% - 450px);
   }
   .h110 {
-    height: 80%;
+    height: calc(100% - 400px);
   }
 }
 .popup-card-open,
 .popup-card-close {
   padding: 15px;
+  height: 100%;
   box-sizing: border-box;
   // overflow: auto;
 }
@@ -280,8 +272,8 @@ $bg: linear-gradient(
   position: fixed;
   top: 50%;
   will-change: height, top;
-  background: rgba(31, 28, 24, 0.3);
-  // backdrop-filter: brightness(90%) saturate(200%) blur(5px);
+  background: rgba(31, 28, 24, 0.8);
+  // backdrop-filter: brightness(90%) saturate(200%) blur(7px);
 }
 .bindata-popup-open:before {
   animation: open-animation 0.5s cubic-bezier(0.83, 0.04, 0, 1.16) 0.1s both;
@@ -295,13 +287,13 @@ $bg: linear-gradient(
     top: 50%;
   }
   100% {
-    height: 100%;
+    height: 100vh;
     top: 0;
   }
 }
 @keyframes close-animation {
   0% {
-    height: 100%;
+    height: 100vh;
     top: 0;
   }
   100% {

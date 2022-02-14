@@ -1,7 +1,11 @@
 <template>
   <div class="css3d">
     <div
-      :class="['label', item.type]"
+      :class="[
+        'label',
+        $store.state.layer.css3DShow ? 'show' : 'hide',
+        item.type,
+      ]"
       v-for="(item, index) in objList"
       :key="item.title + '_' + index"
       :style="item.style"
@@ -81,6 +85,12 @@ export default {
   background: rgba($color: #e7eb17, $alpha: 0.2);
   padding: 10px;
   // transform: translateX(50%);
+  &.show {
+    display: block;
+  }
+  &.hide {
+    display: none;
+  }
   .title {
     border-bottom: 2px solid #e7eb17;
   }
