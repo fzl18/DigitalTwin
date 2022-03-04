@@ -708,10 +708,10 @@ export default {
 }
 @keyframes lineShine {
   0% {
-    transform: translateX(-10%);
+    transform: translate3d(-10%, 0, 0);
   }
   100% {
-    transform: translateX(100%);
+    transform: translate3d(100%, 0, 0);
   }
 }
 </style>

@@ -36,13 +36,13 @@ export default {
   //相机配置项：
   camera: {
     enabled: true, // 允许用户控制视野
-    enableDamping: false, // 启用阻尼
+    enableDamping: true, // 启用阻尼
     dampingFactor: 0.1, // 动态阻尼系数 就是鼠标拖拽旋转,灵敏度
     enableZoom: true, // 是否可以缩放
     autoRotate: false, // 是否自动旋转
     autoRotateSpeed: 1.0, // 自动旋转速度
-    minDistance: 1, // 设置相机距离原点的最小距离
-    maxDistance: 30, // 设置相机距离原点的最远距离
+    minDistance: 0.9, // 设置相机距离原点的最小距离
+    maxDistance: 28, // 设置相机距离原点的最远距离
     enablePan: true, // 是否开启右键拖拽
     maxPolarAngle: Math.PI,
     enableKeys: true, // 启用键盘控制

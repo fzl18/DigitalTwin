@@ -3,17 +3,21 @@
     <div
       :class="[
         'label',
-        $store.state.layer.css3DShow ? 'show' : 'hide',
+        isShow(item.useType) && $store.state.model.currentSecne == item.type
+          ? 'show'
+          : 'hide',
         item.type,
       ]"
-      v-for="(item, index) in objList"
+      v-for="(item, index) in lineList"
       :key="item.title + '_' + index"
       :style="item.style"
       :ref="`css3D${index}`"
       @click="handleClick(item)"
     >
-      <div class="title">{{ item.title }}</div>
-      <div class="body">{{ item.params }}</div>
+      <div class="title">
+        {{ item.title }}
+      </div>
+      <!-- <div class="body">{{ item.params }}</div> -->
     </div>
   </div>
 </template>
@@ -21,33 +25,50 @@
 import { CSS3DObject } from "three/examples/jsm/renderers/CSS3DRenderer";
 const scale = 0.003;
 export default {
-  name: "Mscene",
+  name: "Css3D",
   inject: ["global"],
-  props: {
-    objList: {
-      type: Array,
-      default: () => [
+  props: {},
+  data() {
+    return {
+      lineList: [
         {
           position: "",
-          title: "css3d标题",
-          type: "wef",
-          params: "内容1",
+          title: "温度监测",
+          type: "lineDetail",
+          params: "",
           style: {},
+          rotate: [0, 0, 0],
+          position: [-1.8, 0.07, -0.1],
+          useType: "wd",
         },
         {
           position: "",
-          title: "css3d标题",
-          type: "wefde",
-          params: "内容2",
+          title: "智能托辊",
+          type: "lineDetail",
+          params: "",
           style: {},
+          rotate: [0, 0, 0],
+          position: [-0.822, 0.1, -0.1],
+          useType: "belt",
+        },
+        {
+          position: "",
+          title: "纵斯监测",
+          type: "lineDetail",
+          params: "",
+          style: {},
+          rotate: [0, 0, 0],
+          position: [-1.2, 0.1, -0.1],
+          useType: "zs",
         },
       ],
+    };
+  },
+  computed: {
+    visible() {
+      return this.$store.state.model.currentLineHasModelType;
     },
   },
-  data() {
-    return {};
-  },
-
   mounted() {
     this.$nextTick(() => {
       this.initCss3D();
@@ -62,14 +83,30 @@ export default {
       objectCss3dContainer.position.set(0, 0, 0);
       objectCss3dContainer.scale.set(1 * scale, 1 * scale, 1 * scale);
       this.global.scene.add(objectCss3dContainer);
-      this.objList.forEach((item, index) => {
+
+      this.lineList.forEach((item, index) => {
         let obj = new CSS3DObject(this.$refs["css3D" + index][0]);
-        obj.position.set(-0.5 / scale, 0, index / scale);
+        obj.position.set(
+          item.position[0] / scale,
+          item.position[1] / scale,
+          item.position[2] / scale
+        );
+        if (item.rotate) {
+          obj.rotateY((Math.PI / 360) * item.rotate[1]);
+        }
         objectCss3dContainer.add(obj);
       });
     },
     handleClick(val) {
-      console.log("点击了:" + val.title);
+      if (val.useType) {
+        this.$store.state.panel.currentType = null;
+        setTimeout(() => {
+          this.$store.state.panel.currentType = val.useType;
+        }, 300);
+      }
+    },
+    isShow(val) {
+      return this.$store.state.model.currentLineHasModelType.includes(val);
     },
   },
 };
@@ -80,10 +117,8 @@ export default {
   color: #fff;
   cursor: pointer;
   position: relative;
-  border: 1px solid #fff;
-  box-shadow: 0 0 10px #e7eb17;
-  background: rgba($color: #e7eb17, $alpha: 0.2);
-  padding: 10px;
+
+  text-align: center;
   // transform: translateX(50%);
   &.show {
     display: block;
@@ -91,8 +126,47 @@ export default {
   &.hide {
     display: none;
   }
-  .title {
-    border-bottom: 2px solid #e7eb17;
+
+  &.factory {
+    border: 1px solid #fff;
+    box-shadow: 0 0 10px #e7eb17;
+    background: rgba($color: #e7eb17, $alpha: 0.2);
+    .title {
+      font-size: 50px;
+    }
+  }
+  &.lineDetail {
+    filter: hue-rotate(340deg) contrast(1);
+    position: relative;
+    &::before {
+      content: "";
+      position: absolute;
+      top: 120px;
+      left: 20px;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #e7eb17;
+    }
+    &::after {
+      content: "";
+      position: absolute;
+      top: 30px;
+      left: 22px;
+      width: 1px;
+      height: 90px;
+      background: #e7eb17;
+    }
+    .title {
+      font-size: 12px;
+      padding: 5px;
+      position: relative;
+      border-top: 4px solid #e7eb17;
+      border-radius: 3px;
+      box-shadow: 0 0 6px #e7eb17;
+      background: rgba($color: #e7eb17, $alpha: 0.2);
+      // width: 120px;
+    }
   }
 }
 </style>

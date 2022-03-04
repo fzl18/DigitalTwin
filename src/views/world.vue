@@ -172,26 +172,26 @@ export default {
 
 @keyframes jump {
   0% {
-    transform: translateY(0px);
+    transform: translate3d(0, 0, 0);
   }
   50% {
-    transform: translateY(10px);
+    transform: translate3d(0, 10px, 0);
   }
   100% {
-    transform: translateY(0px);
+    transform: translate3d(0, 0, 0);
   }
 }
 @keyframes light {
   0% {
-    transform: scale(0.7);
+    transform: scale(0.7) translateZ(0);
     opacity: 0.6;
   }
   50% {
-    transform: scale(1.1);
+    transform: scale(1.1) translateZ(0);
     opacity: 1;
   }
   100% {
-    transform: scale(0.7);
+    transform: scale(0.7) translateZ(0);
     opacity: 0.6;
   }
 }

@@ -1,0 +1,142 @@
+{
+  "id": "3046212",
+  "name": "数字孪生",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "24268374",
+      "name": "播放-快进",
+      "font_class": "bofang-kuaijin",
+      "unicode": "e6d8",
+      "unicode_decimal": 59096
+    },
+    {
+      "icon_id": "152423",
+      "name": "问号",
+      "font_class": "qm",
+      "unicode": "e646",
+      "unicode_decimal": 58950
+    },
+    {
+      "icon_id": "998817",
+      "name": "返回",
+      "font_class": "ai207",
+      "unicode": "e6c3",
+      "unicode_decimal": 59075
+    },
+    {
+      "icon_id": "6851521",
+      "name": "操作",
+      "font_class": "caozuo",
+      "unicode": "e6d7",
+      "unicode_decimal": 59095
+    },
+    {
+      "icon_id": "12719935",
+      "name": "合并",
+      "font_class": "hebing",
+      "unicode": "e60e",
+      "unicode_decimal": 58894
+    },
+    {
+      "icon_id": "16365854",
+      "name": "拆组",
+      "font_class": "chaizu",
+      "unicode": "e691",
+      "unicode_decimal": 59025
+    },
+    {
+      "icon_id": "5716003",
+      "name": "旋转",
+      "font_class": "xuanzhuan",
+      "unicode": "e676",
+      "unicode_decimal": 58998
+    },
+    {
+      "icon_id": "11799000",
+      "name": "3D旋转",
+      "font_class": "Dxuanzhuan",
+      "unicode": "e64c",
+      "unicode_decimal": 58956
+    },
+    {
+      "icon_id": "18496898",
+      "name": "地上地下",
+      "font_class": "dishangdixia",
+      "unicode": "e606",
+      "unicode_decimal": 58886
+    },
+    {
+      "icon_id": "19317151",
+      "name": "鼠标",
+      "font_class": "shubiao",
+      "unicode": "f04b",
+      "unicode_decimal": 61515
+    },
+    {
+      "icon_id": "26525876",
+      "name": "鼠标右键",
+      "font_class": "mouseR",
+      "unicode": "e6bd",
+      "unicode_decimal": 59069
+    },
+    {
+      "icon_id": "26525877",
+      "name": "鼠标左键",
+      "font_class": "mouseL",
+      "unicode": "e6be",
+      "unicode_decimal": 59070
+    },
+    {
+      "icon_id": "24952535",
+      "name": "晴天",
+      "font_class": "icon_qingtian",
+      "unicode": "e608",
+      "unicode_decimal": 58888
+    },
+    {
+      "icon_id": "24952591",
+      "name": "夜间晴天",
+      "font_class": "icon_yejianqingtian",
+      "unicode": "e609",
+      "unicode_decimal": 58889
+    },
+    {
+      "icon_id": "24952614",
+      "name": "多云",
+      "font_class": "icon_duoyun",
+      "unicode": "e60b",
+      "unicode_decimal": 58891
+    },
+    {
+      "icon_id": "24952615",
+      "name": "夜间多云",
+      "font_class": "icon_yejianduoyun",
+      "unicode": "e60c",
+      "unicode_decimal": 58892
+    },
+    {
+      "icon_id": "24952626",
+      "name": "阵雨",
+      "font_class": "icon_zhenyu",
+      "unicode": "e60d",
+      "unicode_decimal": 58893
+    },
+    {
+      "icon_id": "24952668",
+      "name": "雷阵雨",
+      "font_class": "icon_leizhenyu",
+      "unicode": "e612",
+      "unicode_decimal": 58898
+    },
+    {
+      "icon_id": "24952673",
+      "name": "小雪",
+      "font_class": "icon_xiaoxue",
+      "unicode": "e614",
+      "unicode_decimal": 58900
+    }
+  ]
+}

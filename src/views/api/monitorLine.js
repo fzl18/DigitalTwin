@@ -37,7 +37,14 @@ export function moduleStatus() {
 
 export function getVideoUrl(id) {
   return request({
-    url: `/monitor/getVideoUrl?deviceCode=${id}`, // 查询模块信息
+    url: `/monitor/getVideoUrl?deviceCode=${id}`, // 查询视频信息
+    method: "get",
+  });
+}
+
+export function getLiveStream(deviceCode) {
+  return request({
+    url: `/monitor/getLiveStream?deviceCode=${deviceCode}`, // 直播开启流
     method: "get",
   });
 }

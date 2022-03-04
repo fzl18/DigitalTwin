@@ -4,6 +4,10 @@ export default {
     header: false,
     rightMenu: false,
     bottomMenu: false,
+    bodyFootMenu: false,
+    modelPlanVisible: false,
+    currentType: null,
+    currentLineId: null,
   },
   mutations: {
     // setBarTitle(state, data) {

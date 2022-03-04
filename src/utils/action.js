@@ -4,10 +4,8 @@ import * as THREE from "three";
 import { RenderPass, EffectComposer, OutlinePass } from "three-outlinepass";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader";
-import { CSS2DObject } from "three/examples/jsm/renderers/CSS2DRenderer";
 import dbStorage from "./indexedDB";
 import store from "@/store/index.js";
-// CSS2DObject;
 let selectedObject = null;
 const cameraViewerTransfrom = (
   camera,
@@ -187,14 +185,14 @@ const loadModel = (options) => {
   });
 };
 
-const panelHandle = (showList = []) => {
+const panelHandle = (showList = [], isShow = true) => {
   const { panel } = store.state || {};
-  const panelList = Object.keys(panel);
-  panelList.map((item) => {
-    if (item != "header") panel[item] = false;
-  });
+  // const panelList = Object.keys(panel);
+  // panelList.map((item) => {
+  //   if (item != "header") panel[item] = false;
+  // });
   showList.map((item) => {
-    panel[item] = true;
+    panel[item] = isShow;
   });
 };
 
@@ -220,6 +218,46 @@ const deleteGroup = (group) => {
   });
 };
 
+const removeScene = (scene) => {
+  clearScene(scene);
+};
+
+const clearCache = (item) => {
+  item.geometry.dispose();
+  item.material.dispose();
+};
+
+const clearScene = (scene) => {
+  removeObj(scene);
+};
+
+const removeObj = (obj) => {
+  let arr = obj.children.filter((x) => x.isMaterial || x.isGeometry);
+  arr.forEach((item) => {
+    if (item.children.length) {
+      removeObj(item);
+    } else {
+      clearCache(item);
+      item.clear();
+    }
+  });
+  obj.clear();
+  arr = null;
+};
+
+// destroyed = () => {
+// window.removeEventListener("resize", this.onWindowResize);
+// this.clearScene();
+// this.renderer.renderLists.dispose();
+// this.renderer.dispose();
+// this.renderer.forceContextLoss();
+// this.renderer.domElement = null;
+// this.renderer.content = null;
+// this.renderer = null;
+// cancelAnimationFrame(animationId);
+// THREE.Cache.clear();
+// };
+
 export {
   cameraViewerTransfrom,
   twAnimation,
@@ -229,4 +267,5 @@ export {
   panelHandle,
   onProgress,
   deleteGroup,
+  removeScene,
 };

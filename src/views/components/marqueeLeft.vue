@@ -40,7 +40,7 @@ export default {
         this.initLeft = 0;
       }
       this.animateTarget.style =
-        "transform: translateX(-" + this.initLeft + "px)";
+        "transform: translate3d(-" + this.initLeft + "px,0,0)";
       this.timer = requestAnimationFrame(this.animateFn);
     },
   },

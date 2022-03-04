@@ -83,12 +83,28 @@ export default {
 
 <style lang="scss" scoped>
 .leftMenu {
-  display: flex;
+  // display: flex;
   // justify-content: space-between;
-  flex-direction: column;
+  // flex-direction: column;
   height: 100%;
   // padding: 20px 30px;
   background: rgba(0, 0, 0, 0.349);
+  overflow-y: auto;
+  overflow-x: hidden;
+  &::-webkit-scrollbar {
+    width: 3px;
+  }
+  &:hover {
+    &::-webkit-scrollbar {
+      width: 3px;
+      background-color: rgba(39, 33, 5, 0.3);
+      border-radius: 20px;
+    }
+    &::-webkit-scrollbar-thumb {
+      background-color: rgba(194, 168, 55, 0.1);
+      border-radius: 20px;
+    }
+  }
   // .list {
   //   .item {
   //     display: block;

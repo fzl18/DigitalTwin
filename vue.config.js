@@ -70,6 +70,13 @@ let proxy = {
     },
     changeOrigin: true,
   },
+  "/live": {
+    target: proxyURL,
+    pathRewrite: {
+      "/live": "/live",
+    },
+    changeOrigin: true,
+  },
 };
 module.exports = {
   publicPath: "./",

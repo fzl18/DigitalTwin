@@ -21,7 +21,8 @@
     <t-scene></t-scene>
     <t-controls></t-controls>
     <t-light></t-light>
-    <t-stats v-if="$store.state.navBar.on2"></t-stats>
+    <t-helper></t-helper>
+    <!-- <t-stats v-if="$store.state.navBar.on2"></t-stats> -->
     <slot></slot>
   </t-renderer>
 </template>
@@ -32,6 +33,7 @@ import {
   panelHandle,
   cameraViewerTransfrom,
   twAnimation,
+  removeScene,
 } from "@/utils/action.js";
 import config from "@/config";
 // THREE.Object3D.DefaultUp = new THREE.Vector3(0, 1, 0);
@@ -39,6 +41,7 @@ export default {
   data() {
     return {
       percent: 0,
+      scene: null,
     };
   },
   props: {
@@ -98,55 +101,70 @@ export default {
   mounted() {
     THREE.Cache.enabled = this.$store.state.model.modelCache;
     this.sceneOpen();
+    this.$nextTick(() => {
+      this.scene = this.$refs.renderer.global.scene;
+    });
+  },
+  destroyed() {
+    removeScene(this.scene);
   },
   methods: {
     sceneOpen() {
-      this.open = true;
+      // this.open = true;
       // this.screenfull();
       setTimeout(() => {
-        panelHandle(["leftMenu", "header", "rightMenu", "bottomMenu"]);
-      }, 3800);
+        panelHandle([
+          "leftMenu",
+          "header",
+          "rightMenu",
+          "bottomMenu",
+          "bodyFootMenu",
+        ]);
+      }, 2000);
       setTimeout(() => {
-        const { camera, controls, scene } = this.$refs.renderer.global;
-        let tw1 = cameraViewerTransfrom(camera, { x: 0.2, y: 1, z: 1 });
-        let tw2 = cameraViewerTransfrom(camera, { x: -0.2, y: 1, z: 2 });
+        const { camera, controls } = this.$refs.renderer.global;
+        controls.target = new THREE.Vector3(
+          -0.34288582695584613,
+          -1.0103117157541581,
+          1.3003601149189583
+        );
+        let tw1 = cameraViewerTransfrom(camera, {
+          x: -9.969528823727979,
+          y: 2.5099065287398563,
+          z: -4.829136053158262,
+        });
+        let tw2 = cameraViewerTransfrom(camera, {
+          x: 10.431904627242009,
+          y: 3.5474141537639374,
+          z: -4.2636095230758535,
+        });
         let tw3 = cameraViewerTransfrom(
           camera,
-          { x: 3.6, y: 1, z: 3.2 },
+          {
+            x: 10.718032220091404,
+            y: 9.002019497304584,
+            z: 19.78184611075372,
+          },
           () => {
-            // setTimeout(() => (controls.autoRotate = this.autoRotate), 2000);
+            setTimeout(() => (controls.autoRotate = this.autoRotate), 1500);
             // this.$store.state.layer.css2DShow = true;
             // this.$store.state.layer.css3DShow = true;
+            this.$store.state.panel.modelPlanVisible = true;
+            this.$store.state.layer.css2DShow = true;
+            this.$store.state.layer.css3DShow = true;
           }
         );
-        // console.log(scene);
-        // let floor = scene.getObjectByName("processed").getObjectByName("地面")
-        //   .position;
-        // let tw4 = twAnimation(
-        //   floor,
-        //   { x: 0, y: 10000, z: 0 },
-        //   5500,
-        //   (data) => {
-        //     floor.set(data.x, data.y, data.z);
-        //   },
-        //   () => {
-        //     this.$store.state.layer.css2DShow = true;
-        //     this.$store.state.layer.css3DShow = true;
-        //   },
-        //   false
-        // );
+
         tw1.chain(tw2);
         tw2.chain(tw3);
-        // tw3.chain(tw4);
         tw1.start();
-      }, 6200);
+      }, 2500);
     },
     screenfull() {
       screenfull.toggle();
     },
     clearScene() {
       //todo
-      console.log("clearScene");
     },
   },
 };

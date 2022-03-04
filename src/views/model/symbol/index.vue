@@ -1,5 +1,6 @@
 <script>
 import { loadModel, onProgress, playAnimationByName } from "@/utils/action";
+import loadingVue from "../../components/loading.vue";
 export default {
   name: "Msymbol",
   inject: ["global"],

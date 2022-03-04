@@ -39,10 +39,12 @@ export default {
   background: rgba(0, 0, 0, 0.349);
   height: 100%;
   width: 100%;
-  display: flex;
+  // display: flex;
   // justify-content: space-between;
-  flex-direction: column;
+  // flex-direction: column;
   align-items: center;
+  overflow-x: hidden;
+  overflow-y: auto;
   // padding: 20px;
   // ul {
   //   li {
@@ -55,5 +57,19 @@ export default {
   //     margin: 0 10px;
   //   }
   // }
+  &::-webkit-scrollbar {
+    width: 3px;
+  }
+  &:hover {
+    &::-webkit-scrollbar {
+      width: 3px;
+      background-color: rgba(39, 33, 5, 0.3);
+      border-radius: 20px;
+    }
+    &::-webkit-scrollbar-thumb {
+      background-color: rgba(194, 168, 55, 0.1);
+      border-radius: 20px;
+    }
+  }
 }
 </style>

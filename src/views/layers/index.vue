@@ -89,10 +89,12 @@
         <div class="foot">
           <Box
             animateType="fadeup"
-            :isShow="$store.state.panel.header"
+            :isShow="$store.state.panel.bodyFootMenu"
             :delay="0.8"
           >
-            <div style="width:1165px">
+            <div
+              style="width:1165px;background:rgba(0, 0, 0, 0.521);padding-bottom: 10px;"
+            >
               <Nav ref="nav" />
               <News ref="news" :data="newsData" style="margin-left:35px" />
             </div>
@@ -160,7 +162,7 @@
     <!-- <div class="bottom-layers">
       <BottomMenu />
     </div> -->
-    <Popup :visible="visible">
+    <!-- <Popup :visible="visible">
       <Model
         :size="{ w: 700, h: 700 }"
         :isMask="false"
@@ -169,7 +171,7 @@
       >
         <Msymbol :modelList="symbolList" @progress="progress" />
       </Model>
-    </Popup>
+    </Popup> -->
   </div>
 </template>
 
@@ -541,8 +543,8 @@ export default {
         }
       }
       .foot {
-        background: rgba(0, 0, 0, 0.521);
-        margin-bottom: 10px;
+        // background: rgba(0, 0, 0, 0.521);
+        // margin-bottom: 10px;
         pointer-events: auto;
       }
     }

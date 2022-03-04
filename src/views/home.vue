@@ -4,9 +4,9 @@
       <div class="wrape" :style="wrapeStyle">
         <Model ref="viewer" v-if="$store.state.index.curObjLevel == 4">
           <Msymbol :modelList="symbolList" @progress="progress" />
-          <Css2D />
-          <Css3D />
-          <ModelPanel />
+          <Css2D ref="css2d" />
+          <Css3D ref="css3d" />
+          <ModelPanel ref="modelPanel" />
           <!-- <Effect /> -->
         </Model>
         <Layers ref="layer" />
@@ -24,7 +24,7 @@ import Msymbol from "./model/symbol";
 import Css2D from "./model/css2D";
 import Css3D from "./model/css3D";
 import Effect from "./model/effect";
-
+import { coordinate } from "./api/monitorLine";
 export default {
   data() {
     return {
@@ -71,21 +71,35 @@ export default {
   },
   mounted() {
     this.getSymbolList();
-    this.$store.state.model.loadingComplete = true;
+    // this.$store.state.model.loadingComplete = true;
   },
   methods: {
     getSymbolList(id) {
       this.symbolList = [
         {
           name: "processed",
-          url: "model/1.gltf",
-          draco: false,
-          // onprogress: true,
+          url: "model/50.glb",
+          draco: true,
+          onprogress: true,
           callback: (group) => {
             // group.position.z = -1;
             // group.position.x = 3;
             group.scale.set(0.001, 0.001, 0.001);
-            group.visible = false;
+            group.visible = true;
+            coordinate().then((res) => {
+              if (res.success) {
+                let list = this.$refs.css2d.lineList;
+                list.map((item) => {
+                  let order = item.target.split("#").pop();
+                  res.data.forEach((val, index) => {
+                    if (order == index) {
+                      // val.order
+                      item.params = val;
+                    }
+                  });
+                });
+              }
+            });
           },
         },
         // {
@@ -100,24 +114,24 @@ export default {
         // },
         {
           name: "line",
-          url: "model/line.gltf",
+          url: "model/52.gltf",
           draco: false,
           callback: (group) => {
             // group.position.y = -2;
-            group.scale.set(0.005, 0.005, 0.005);
+            group.scale.set(0.001, 0.001, 0.001);
+            group.visible = false;
           },
         },
-        {
-          name: "equipment",
-          url: "model/equipment.glb",
-          draco: true,
-          onprogress: true,
-          callback: (group) => {
-            group.position.z = 0;
-            group.position.set(-6, -9, -6);
-            // group.scale.set(0.0001, 0.0001, 0.0001);
-          },
-        },
+        // {
+        //   name: "9",
+        //   url: "model/9.gltf",
+        //   draco: false,
+        //   onprogress: true,
+        //   callback: (group) => {
+        //     group.position.set(0, 0, 0.5);
+        //     group.scale.set(0.001, 0.001, 0.001);
+        //   },
+        // },
       ];
     },
     progress(percent) {
