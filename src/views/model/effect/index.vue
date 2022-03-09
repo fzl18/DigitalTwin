@@ -1,5 +1,7 @@
 <script>
 import * as THREE from "three";
+import { DragControls } from "three/examples/jsm/controls/DragControls"; //拖拽控件
+import { TransformControls } from "three/examples/jsm/controls/TransformControls"; //可视化平移控件
 export default {
   inject: ["global"],
   data() {
@@ -12,6 +14,7 @@ export default {
   },
   mounted() {
     this.addCurve();
+    this.addDarg();
   },
   methods: {
     addCurve() {
@@ -34,6 +37,20 @@ export default {
       this.global.scene.add(curveGroup);
       curveGroup.position.set(0, 0, -1);
       curveGroup.scale.set(0.01, 0.01, 0.01);
+    },
+    addDarg() {
+      const objects = [];
+      const { scene, camera, renderer } = this.global;
+      this.transformControls = new TransformControls(
+        camera,
+        renderer.domElement
+      );
+      scene.add(this.transformControls);
+      this.dragControls = new DragControls(
+        objects,
+        camera,
+        renderer.domElement
+      );
     },
   },
 };

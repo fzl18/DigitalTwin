@@ -90,7 +90,7 @@
           <Box
             animateType="fadeup"
             :isShow="$store.state.panel.bodyFootMenu"
-            :delay="0.8"
+            :delay="0.5"
           >
             <div
               style="width:1165px;background:rgba(0, 0, 0, 0.521);padding-bottom: 10px;"

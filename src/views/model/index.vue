@@ -7,7 +7,7 @@
     >
       <Loading>
         <div class="tips">
-          <div>模型加载中...</div>
+          <div>数据加载中...</div>
           <div>已加载{{ percent.toFixed(2) }}%</div>
         </div>
       </Loading>
@@ -22,6 +22,7 @@
     <t-controls></t-controls>
     <t-light></t-light>
     <t-helper></t-helper>
+    <t-fog></t-fog>
     <!-- <t-stats v-if="$store.state.navBar.on2"></t-stats> -->
     <slot></slot>
   </t-renderer>
@@ -68,6 +69,10 @@ export default {
       return {
         width: this.size.w + "px",
         height: this.size.h + "px",
+        background:
+          this.$store.state.model.currentSecne == "lineDetail"
+            ? "#00000077"
+            : "#000000",
         // marginTop: this.$store.state.layer.headerHeight + "px",
       };
     },
@@ -186,7 +191,6 @@ export default {
 .loading-container {
   position: fixed;
   z-index: 99999;
-  background-color: #000000;
   display: flex;
   align-items: center;
   justify-content: center;

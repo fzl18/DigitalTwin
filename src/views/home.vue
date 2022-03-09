@@ -78,7 +78,7 @@ export default {
       this.symbolList = [
         {
           name: "processed",
-          url: "model/50.glb",
+          url: "model/51.gltf",
           draco: true,
           onprogress: true,
           callback: (group) => {

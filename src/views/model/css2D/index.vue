@@ -29,29 +29,35 @@
       :style="item.style"
       :ref="`css2DLine${index}`"
     >
-      <div class="title" @mouseover="curItem = index">
+      <div class="title" @mouseover="curItem = index" @mouseleave="handleLeave">
         <div class="index">{{ item.target }}</div>
         <div class="text">{{ item.params.lineName }}</div>
-      </div>
-      <Box animateType="toggle" :isShow="curItem == index" :delay="0.1">
-        <div class="body" @mouseleave="handleLeave">
-          <div>{{ item.params.lineName }}</div>
-          <div>
-            {{ item.params.lineLength + "米" }}
-            {{
-              item.params.lineStatus == "ERROR"
-                ? "异常"
-                : item.params.lineStatus == "WARN"
-                ? "警告"
-                : "运行正常"
-            }}
+
+        <Box
+          animateType="toggle"
+          :isShow="curItem == index"
+          :delay="0.1"
+          class="box"
+        >
+          <div class="body">
+            <div>{{ item.params.lineName }}</div>
+            <div>
+              {{ item.params.lineLength + "米" }}
+              {{
+                item.params.lineStatus == "ERROR"
+                  ? "异常"
+                  : item.params.lineStatus == "WARN"
+                  ? "警告"
+                  : "运行正常"
+              }}
+            </div>
+            <div>运行时间：{{ Math.floor(item.params.lineTime / 60) }} h</div>
+            <div>运行距离：{{ Math.floor(item.params.lineMileage) }} km</div>
+            <div class="lineDetail" @click="handleLine(item)">详情</div>
+            <i class="el-icon-close btn-close" @click="handleLeave"></i>
           </div>
-          <div>运行时间：{{ Math.floor(item.params.lineTime / 60) }} h</div>
-          <div>运行距离：{{ Math.floor(item.params.lineMileage) }} km</div>
-          <div class="lineDetail" @click="handleLine(item)">详情</div>
-          <i class="el-icon-close btn-close" @click="handleLeave"></i>
-        </div>
-      </Box>
+        </Box>
+      </div>
     </div>
   </div>
 </template>
@@ -259,22 +265,26 @@ export default {
       width: 150px;
       text-align: center;
       cursor: pointer;
-      z-index: 99;
       position: relative;
       .index {
         background: rgba($color: #c7aa04, $alpha: 1);
         color: #705c01;
         border-radius: 6px 6px 0 0;
+        z-index: 99;
+        position: relative;
       }
       .text {
         padding: 6px 8px;
         font-size: 15px;
       }
+      .box {
+        z-index: 98;
+      }
     }
     .body {
       position: absolute;
       left: -35%;
-      bottom: 32px;
+      bottom: 28px;
       border: 2px solid #daba0a;
       border-radius: 6px;
       padding: 10px;
@@ -282,6 +292,7 @@ export default {
       height: 180px;
       background: #4d4101f3;
       font-size: 16px;
+      text-align: left;
       > div {
         margin: 15px 0;
         &.lineDetail {

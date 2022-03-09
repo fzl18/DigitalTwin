@@ -1,10 +1,11 @@
 <template>
-  <div
-    class="modelPanel"
-    :style="calcStyle"
-    v-if="$store.state.panel.modelPlanVisible"
-  >
-    <div class="button">
+  <div class="modelPanel" :style="calcStyle">
+    <div class="button" v-if="!$store.state.panel.modelPlanVisible">
+      <div class="" @click="handleSkip">
+        跳过
+      </div>
+    </div>
+    <div class="button" v-if="$store.state.panel.modelPlanVisible">
       <div class="" @click="handleScene">
         <svg class="icon" aria-hidden="true">
           <use xlink:href="#icon-Dxuanzhuan"></use>
@@ -142,7 +143,11 @@
 <script>
 import config from "../../../config";
 import "@/assets/font/iconfont.js";
-import { cameraViewerTransfrom, panelHandle } from "@/utils/action.js";
+import {
+  cameraViewerTransfrom,
+  panelHandle,
+  stopTwAnimation,
+} from "@/utils/action.js";
 import Popup from "@/views/components/popup";
 import * as THREE from "three";
 export default {
@@ -189,7 +194,13 @@ export default {
       this.isClear = true;
       tw.start();
     },
-    handleSkip() {},
+    handleSkip() {
+      stopTwAnimation();
+      this.$store.state.panel.modelPlanVisible = true;
+      this.handleOnside();
+      this.$store.state.layer.css2DShow = true;
+      this.$store.state.layer.css3DShow = true;
+    },
     handleFactory() {
       const { scene } = this.global;
       scene.getObjectByName("processed").visible = true;

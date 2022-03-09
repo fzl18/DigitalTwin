@@ -41,6 +41,11 @@ const twAnimation = (
   return tween;
 };
 
+const stopTwAnimation = (cb) => {
+  TWEEN.removeAll();
+  cb && cb();
+};
+
 const outline = (selectedObjects, global, color = "#15c5e8") => {
   const { renderer, camera, scene } = global;
   const [w, h] = [window.innerWidth, window.innerHeight];
@@ -268,4 +273,5 @@ export {
   onProgress,
   deleteGroup,
   removeScene,
+  stopTwAnimation,
 };

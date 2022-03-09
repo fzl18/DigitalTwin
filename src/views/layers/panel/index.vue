@@ -225,8 +225,10 @@ export default {
       this.$store.state.panel.currentType = null;
     },
     getLineInfo(id) {
+      this.$store.state.model.loadingComplete = false;
       getLineVisual(id).then((res) => {
         if (res.success) {
+          this.$store.state.model.loadingComplete = true;
           this.openLineInfo = res.data || {};
           this.videoList = [];
           this.temperatureList = [];
@@ -278,8 +280,7 @@ export default {
           });
           this.loading = false;
         } else {
-          this.loading = false;
-          this.visible = false;
+          this.$store.state.model.loadingComplete = true;
           window.alert(`Code:${res.errorCode}:${res.errorMsg}`);
           this.$root.$children[0].$children[0].$refs.modelPanel.handleBack();
         }
