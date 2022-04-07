@@ -19,6 +19,7 @@
       :class="[
         'label',
         $store.state.layer.css2DShow &&
+        item.visible &&
         $store.state.model.currentSecne == 'line'
           ? 'show'
           : 'hide',
@@ -29,13 +30,18 @@
       :style="item.style"
       :ref="`css2DLine${index}`"
     >
-      <div class="title" @mouseover="curItem = index" @mouseleave="handleLeave">
+      <div
+        class="title"
+        :style="{ cursor: item.target ? 'pointer' : 'auto' }"
+        @mouseover="curItem = index"
+        @mouseleave="handleLeave"
+      >
         <div class="index">{{ item.target }}</div>
         <div class="text">{{ item.params.lineName }}</div>
 
         <Box
           animateType="toggle"
-          :isShow="curItem == index"
+          :isShow="curItem == index && item.target != null"
           :delay="0.1"
           class="box"
         >
@@ -72,79 +78,126 @@ export default {
   data() {
     return {
       lineList: [
+        // {
+        //   target: "#1",
+        //   params: {},
+        //   style: {},
+        //   position: [-5, -6.5, 4.6],
+        //   visible: false,
+        // },
         {
           target: "#1",
           params: {},
           style: {},
-          position: [-5, -6.5, 4.6],
+          position: [-3.5, -7, -0.8],
+          visible: false,
         },
         {
           target: "#2",
           params: {},
           style: {},
-          position: [-5, -7, 2.5],
+          position: [-3.5, -7, 4],
+          visible: false,
         },
-        {
-          target: "#3",
-          params: {},
-          style: {},
-          position: [-1.8, -7, 4.3],
-        },
+        // {
+        //   target: "#3",
+        //   params: {},
+        //   style: {},
+        //   position: [-1.8, -7, 4.3],
+        //   visible: false,
+        // },
         {
           target: "#4",
           params: {},
           style: {},
-          position: [-1, -7, 3],
+          position: [2, -7.2, 0],
+          visible: false,
         },
         {
           target: "#5",
           params: {},
           style: {},
-          position: [4, -6.6, 0],
+          position: [3, -7.2, -2.6],
+          visible: false,
+        },
+        // {
+        //   target: "#6",
+        //   params: {},
+        //   style: {},
+        //   position: [3, -7, 5.38],
+        //   visible: false,
+        // },
+        // {
+        //   target: "#7",
+        //   params: {},
+        //   style: {},
+        //   position: [2.2, -7, 4.7],
+        //   visible: false,
+        // },
+        // {
+        //   target: "#8",
+        //   params: {},
+        //   style: {},
+        //   position: [1, -7, 4],
+        //   visible: false,
+        // },
+        {
+          params: {
+            lineName: "煤层工作面 #1",
+          },
+          style: { filter: "hue-rotate(10deg)" },
+          position: [-3, -7, 0.5],
+          visible: true,
         },
         {
-          target: "#6",
-          params: {},
-          style: {},
-          position: [3, -7, 5.38],
+          params: {
+            lineName: "煤层工作面 #2",
+          },
+          style: { filter: "hue-rotate(10deg)" },
+          position: [-3, -7, 5],
+          visible: true,
         },
         {
-          target: "#7",
-          params: {},
-          style: {},
-          position: [2.2, -7, 4.7],
+          params: {
+            lineName: "行车巷 #1",
+          },
+          style: { filter: "hue-rotate(80deg)" },
+          position: [-1, -7.3, 1.5],
+          visible: true,
         },
         {
-          target: "#8",
-          params: {},
-          style: {},
-          position: [1, -7, 4],
+          params: {
+            lineName: "行车巷 #2",
+          },
+          style: { filter: "hue-rotate(80deg)" },
+          position: [-1, -7.3, 6.3],
+          visible: true,
         },
       ],
       factoryList: [
         {
+          label: "生活区",
+          position: [-3, 1.5, 0.5],
+        },
+        {
+          label: "矿井入口",
+          position: [5.6, 0.5, -1.3],
+        },
+        {
           label: "办公区",
-          position: [-2.6, 1.5, 0.8],
+          position: [-2.6, 1, 3.5],
         },
         {
-          label: "主煤仓",
-          position: [3, 0.5, 0.7],
-        },
-        {
-          label: "2号煤仓",
-          position: [-2.6, 1, 2.6],
-        },
-        {
-          label: "厂内生活区",
+          label: "主干道",
           position: [0, 1, 6],
         },
         {
-          label: "输送线",
-          position: [0, 1, -2.8],
+          label: "存储区",
+          position: [2, 1, -2],
         },
         {
-          label: "厂内生产区",
-          position: [1, 1, 3],
+          label: "生产区",
+          position: [3, 1, 3],
         },
       ],
       curItem: null,
@@ -152,10 +205,6 @@ export default {
   },
   computed: {
     isShow() {
-      console.log(
-        this.lineList,
-        this.$store.state.model.currentSecne == "line"
-      );
       return this.$store.state.model.currentSecne == "line" ? "show" : "hide";
     },
   },
@@ -194,15 +243,16 @@ export default {
       gridHelper.visible = true;
       gridHelper.position.set(-0.05, -0.42, -0.5);
       gridHelper.scale.set(2, 2, 2);
+      camera.position.set(4, 8, 8);
       let tw = cameraViewerTransfrom(camera, {
-        x: -2.7050315285124524,
-        y: 0.44767830782712337,
-        z: 1.9513428456067066,
+        x: 2.893333780717886,
+        y: 0.5941024658681213,
+        z: -1.952995214934258,
       });
       controls.target = new THREE.Vector3(
-        -1.2344807147947514,
-        0.020625421366042087,
-        -0.21994850666260773
+        0.5837352489786423,
+        -0.36467920843154106,
+        0.6567449377355513
       );
       panelHandle(
         ["leftMenu", "rightMenu", "bottomMenu", "bodyFootMenu"],

@@ -52,7 +52,7 @@ export default {
   height: 100%;
   display: flex;
   align-items: center;
-  pointer-events: auto;
+  // pointer-events: auto;
   // transform-origin: 0 0;
   &.fadeleftin {
     transform: translateX(0px);

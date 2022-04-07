@@ -141,9 +141,9 @@ const playAnimationByName = (group, global) => {
   if (clip) {
     const action = mixer.clipAction(clip);
     action.play();
-    global.mixers.set(animName, mixer);
+    global.mixers.set(group.scene.name, mixer); //animName
   } else {
-    global.mixers.delete(animName);
+    global.mixers.delete(group.scene.name); //animName
   }
 };
 

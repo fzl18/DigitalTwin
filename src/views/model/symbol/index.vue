@@ -44,6 +44,7 @@ export default {
           url: item.url,
           complete: (object) => {
             let group = object.scene;
+            group.name = item.name;
             if (object.animations && object.animations.length) {
               playAnimationByName(object, this.global);
             }
@@ -52,7 +53,6 @@ export default {
             // group.rotateX(Math.PI / 2);
             // group.rotateY(-Math.PI / 2);
             group.position.set(0, 0, 0);
-            group.name = item.name;
             this.global.scene.add(group);
             item.callback && item.callback(group);
           },

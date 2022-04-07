@@ -174,6 +174,33 @@ export default {
       return this.$store.state.model.currentSecne;
     },
   },
+  watch: {
+    "$store.state.model.currentSecne"(type) {
+      if (type == "factory") {
+        this.handleControlsInit();
+      }
+      if (type == "line") {
+        this.handleControlsInit();
+        setTimeout(() => {
+          this.global.controls.enablePan = false;
+          this.global.controls.minDistance = 5;
+          this.global.controls.maxDistance = 18;
+          this.global.controls.maxAzimuthAngle = Math.PI / 2;
+          this.global.controls.minAzimuthAngle = -Math.PI / 2;
+          this.global.controls.maxPolarAngle = Math.PI / 1.8;
+          this.global.controls.minPolarAngle = Math.PI / 3;
+        }, 2500);
+      }
+      if (type == "lineDetail") {
+        this.handleControlsInit();
+        setTimeout(() => {
+          this.global.controls.enablePan = false;
+          this.global.controls.minDistance = 1;
+          this.global.controls.maxDistance = 3;
+        }, 2500);
+      }
+    },
+  },
   mounted() {},
   methods: {
     panelHandle,
@@ -266,6 +293,15 @@ export default {
       );
       controls.target = this.$store.state.model.currentControlsTarget;
       tw.start();
+    },
+    handleControlsInit() {
+      this.global.controls.enablePan = config.camera.enablePan;
+      this.global.controls.minDistance = config.camera.minDistance;
+      this.global.controls.maxDistance = config.camera.maxDistance;
+      this.global.controls.maxAzimuthAngle = Infinity;
+      this.global.controls.minAzimuthAngle = Infinity;
+      this.global.controls.maxPolarAngle = Math.PI;
+      this.global.controls.minPolarAngle = 0;
     },
   },
 };

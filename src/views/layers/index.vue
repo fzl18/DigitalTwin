@@ -313,12 +313,12 @@ export default {
           rightItem = [];
         left.forEach((item) => {
           leftItem.push(item.split("|")[0]);
-          this.$store.state[`${item.split("|")[0]}On`] =
+          this.$store.state.index[`${item.split("|")[0]}On`] =
             item.split("|")[1] * 1 == 1;
         });
         right.forEach((item) => {
           rightItem.push(item.split("|")[0]);
-          this.$store.state[`${item.split("|")[0]}On`] =
+          this.$store.state.index[`${item.split("|")[0]}On`] =
             item.split("|")[1] * 1 == 1;
         });
         this.$store.state.leftChartsItem = leftItem;

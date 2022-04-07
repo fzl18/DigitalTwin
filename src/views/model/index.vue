@@ -43,6 +43,7 @@ export default {
     return {
       percent: 0,
       scene: null,
+      global: null,
     };
   },
   props: {
@@ -105,13 +106,17 @@ export default {
   },
   mounted() {
     THREE.Cache.enabled = this.$store.state.model.modelCache;
+    this.$store.state.panel.modelPlanVisible = false;
     this.sceneOpen();
     this.$nextTick(() => {
       this.scene = this.$refs.renderer.global.scene;
+      this.global = this.$refs.renderer.global;
     });
   },
   destroyed() {
     removeScene(this.scene);
+    // this.$refs.renderer.global = null;
+    this.$store.state.model.currentSecne = "factory";
   },
   methods: {
     sceneOpen() {
@@ -163,7 +168,7 @@ export default {
         tw1.chain(tw2);
         tw2.chain(tw3);
         tw1.start();
-      }, 2500);
+      }, 1000);
     },
     screenfull() {
       screenfull.toggle();

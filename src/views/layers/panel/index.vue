@@ -8,7 +8,12 @@
         <table border="0" cellpadding="0" cellspacing="0">
           <thead>
             <tr>
-              <th colspan="2">{{ openLineInfo.coveryLineName }} 输送线信息</th>
+              <th colspan="2">
+                {{ openLineInfo.coveryLineName }} 输送线信息
+                <span
+                  :class="['dot', openLineInfo.lineStatus == 0 ? '' : 'err']"
+                ></span>
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -28,7 +33,7 @@
         :isShow="$store.state.panel.currentType != null"
         :delay="0.2"
       >
-        <div class="popbox base">
+        <div v-drag class="popbox base">
           <div class="body">
             <div v-if="openLineInfo.moduleList.length">
               <div class="tit">
@@ -233,6 +238,11 @@ export default {
           this.videoList = [];
           this.temperatureList = [];
           this.$store.state.model.currentLineHasModelType = [];
+          if (this.openLineInfo.lineStatus !== 0) {
+            this.$parent.$parent.$children[1].global.mixers.get(
+              "line"
+            ).timeScale = 0;
+          }
           this.openLineInfo.moduleList.forEach((data, index) => {
             this.$store.state.model.currentLineHasModelType.push(
               data.moduleType
@@ -282,6 +292,7 @@ export default {
         } else {
           this.$store.state.model.loadingComplete = true;
           window.alert(`Code:${res.errorCode}:${res.errorMsg}`);
+          this.$store.state.panel.currentLineId = null;
           this.$root.$children[0].$children[0].$refs.modelPanel.handleBack();
         }
       });
@@ -413,6 +424,17 @@ export default {
           width: 230px;
           color: rgb(211, 172, 65);
         }
+        span.dot {
+          display: inline-block;
+          width: 12px;
+          height: 12px;
+          border-radius: 50%;
+          margin-left: 10px;
+          background: rgb(7, 196, 0);
+          &.err {
+            background: rgb(196, 72, 0);
+          }
+        }
       }
     }
     .popbox {
@@ -427,6 +449,7 @@ export default {
       // border: 1px solid rgb(11, 184, 184);
       // background: rgba(11, 184, 184, 0.486);
       font-size: 15px;
+      pointer-events: auto;
       .close {
         position: absolute;
         right: 0;
@@ -455,6 +478,16 @@ export default {
       }
 
       &.base {
+        position: relative;
+        &::before {
+          content: "";
+          position: absolute;
+          height: 30px;
+          width: 100%;
+          top: 0;
+          left: 0;
+          cursor: move;
+        }
         .tit {
           background: url("../../../assets/img/textbg.png") center 50% no-repeat;
           background-size: 100%;

@@ -71,14 +71,13 @@ export default {
   },
   mounted() {
     this.getSymbolList();
-    // this.$store.state.model.loadingComplete = true;
   },
   methods: {
     getSymbolList(id) {
       this.symbolList = [
         {
           name: "processed",
-          url: "model/51.gltf",
+          url: "model/21.gltf",
           draco: true,
           onprogress: true,
           callback: (group) => {
@@ -90,11 +89,15 @@ export default {
               if (res.success) {
                 let list = this.$refs.css2d.lineList;
                 list.map((item) => {
-                  let order = item.target.split("#").pop();
+                  let order = item.target && item.target.split("#").pop();
                   res.data.forEach((val, index) => {
-                    if (order == index) {
+                    if (val.lineOrder && order == val.lineOrder) {
                       // val.order
                       item.params = val;
+                      item.visible = true;
+                    } else if (order == index) {
+                      item.params = val;
+                      item.visible = true;
                     }
                   });
                 });
@@ -102,19 +105,9 @@ export default {
             });
           },
         },
-        // {
-        //   name: "tturebine",
-        //   url: "model/untitled1_small.glb",
-        //   draco: true,
-        //   onprogress: true,
-        //   callback: (group) => {
-        //     group.position.set(0, -2, 0);
-        //     // group.position.x = 3;
-        //   },
-        // },
         {
           name: "line",
-          url: "model/52.gltf",
+          url: "model/20.gltf",
           draco: false,
           callback: (group) => {
             // group.position.y = -2;
