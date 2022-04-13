@@ -12,16 +12,13 @@ import "./assets/scss/style.scss";
 import * as echarts from "echarts";
 import box from "./views/components/transfBox.vue";
 import blockBox from "./views/components/blockBox.vue";
-import three3d from "./common/three3d/index";
 import loading from "./views/components/loading";
-import dbStorage from "./utils/indexedDB";
 Vue.use(ElementUI);
-Vue.use(three3d);
+// Vue.use(three3d);
 Vue.component("Box", box);
 Vue.component("Block", blockBox);
 Vue.component("Loading", loading);
 Vue.prototype.$echarts = echarts;
-Vue.prototype.$dbStorage = dbStorage;
 Vue.config.productionTip = false;
 
 new Vue({

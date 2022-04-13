@@ -173,7 +173,7 @@ import {
   getLiveStream,
 } from "../../api/monitorLine";
 import { formatTime } from "../../../utils";
-import flvjs from "flv.js";
+// import flvjs from "flv.js";
 export default {
   name: "Panel",
   data() {
@@ -333,60 +333,60 @@ export default {
         return "异常";
       }
     },
-    videoPlay(id, position) {
-      if (flvjs.isSupported()) {
-        getLiveStream(id).then((res) => {
-          if (!res.data) {
-            return;
-          }
-          if (!position) {
-            let videoElement = document.getElementById("video");
-            let flvPlayer = flvjs.createPlayer(
-              {
-                type: "flv",
-                // isLive: true,
-                url: `/live/${id}.flv`,
-              }
-              // {
-              //   // enableWorker: true,
-              //   enableStashBuffer: false,
-              //   isLive: true,
-              //   // lazyLoad: false,
-              // }
-            );
+    // videoPlay(id, position) {
+    //   if (flvjs.isSupported()) {
+    //     getLiveStream(id).then((res) => {
+    //       if (!res.data) {
+    //         return;
+    //       }
+    //       if (!position) {
+    //         let videoElement = document.getElementById("video");
+    //         let flvPlayer = flvjs.createPlayer(
+    //           {
+    //             type: "flv",
+    //             // isLive: true,
+    //             url: `/live/${id}.flv`,
+    //           }
+    //           // {
+    //           //   // enableWorker: true,
+    //           //   enableStashBuffer: false,
+    //           //   isLive: true,
+    //           //   // lazyLoad: false,
+    //           // }
+    //         );
 
-            flvPlayer.attachMediaElement(videoElement);
-            flvPlayer.load();
-            flvPlayer.play();
-          }
-          if (position) {
-            let video2Element = document.getElementById("video2");
-            let flvPlayer2 = flvjs.createPlayer(
-              {
-                type: "flv",
-                // isLive: true,
-                url: `/live/${id}.flv`,
-                // hasAudio: false, // 关闭声音
-                // cors: true, // 开启跨域访问
-                // duration: 0,
-                // currentTime: 0,
-              }
-              // {
-              //   autoCleanupSourceBuffer: true, //对SourceBuffer进行自动清理
-              //   autoCleanupMaxBackwardDuration: 12, //    当向后缓冲区持续时间超过此值（以秒为单位）时，请对SourceBuffer进行自动清理
-              //   autoCleanupMinBackwardDuration: 8, //指示进行自动清除时为反向缓冲区保留的持续时间（以秒为单位）。
-              //   enableStashBuffer: false, //关闭IO隐藏缓冲区
-              //   isLive: true,
-              //   lazyLoad: false,
-              // }
-            );
-            flvPlayer2.attachMediaElement(video2Element);
-            flvPlayer2.load();
-            flvPlayer2.play();
-          }
-        });
-      }
-    },
+    //         flvPlayer.attachMediaElement(videoElement);
+    //         flvPlayer.load();
+    //         flvPlayer.play();
+    //       }
+    //       if (position) {
+    //         let video2Element = document.getElementById("video2");
+    //         let flvPlayer2 = flvjs.createPlayer(
+    //           {
+    //             type: "flv",
+    //             // isLive: true,
+    //             url: `/live/${id}.flv`,
+    //             // hasAudio: false, // 关闭声音
+    //             // cors: true, // 开启跨域访问
+    //             // duration: 0,
+    //             // currentTime: 0,
+    //           }
+    //           // {
+    //           //   autoCleanupSourceBuffer: true, //对SourceBuffer进行自动清理
+    //           //   autoCleanupMaxBackwardDuration: 12, //    当向后缓冲区持续时间超过此值（以秒为单位）时，请对SourceBuffer进行自动清理
+    //           //   autoCleanupMinBackwardDuration: 8, //指示进行自动清除时为反向缓冲区保留的持续时间（以秒为单位）。
+    //           //   enableStashBuffer: false, //关闭IO隐藏缓冲区
+    //           //   isLive: true,
+    //           //   lazyLoad: false,
+    //           // }
+    //         );
+    //         flvPlayer2.attachMediaElement(video2Element);
+    //         flvPlayer2.load();
+    //         flvPlayer2.play();
+    //       }
+    //     });
+    //   }
+    // },
   },
 };
 </script>

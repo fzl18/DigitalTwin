@@ -1,0 +1,1 @@
+快捷方式添加： -AudioMixer -PixelStreamingIP=localhost -PixelStreamingPort=8888 -RenderOffScreen

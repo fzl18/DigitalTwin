@@ -1,9 +1,9 @@
-import fetch from '@/utils/request'
+import fetch from "@/utils/request";
 
-let request = fetch('/framework')
+let request = fetch("/framework");
 export default {
-  fetch: function (data) {
-    return request(data)
+  fetch: function(data) {
+    return request(data);
     // return new Promise((resolve, reject) => {
     //   request(data)
     //     .then((...array) => {
@@ -12,4 +12,4 @@ export default {
     //     .catch((...array) => {})
     // })
   },
-}
+};

@@ -2,13 +2,7 @@
   <div id="home">
     <Container class="bg" ref="container" :style="homeStyle">
       <div class="wrape" :style="wrapeStyle">
-        <Model ref="viewer" v-if="$store.state.index.curObjLevel == 4">
-          <Msymbol :modelList="symbolList" @progress="progress" />
-          <Css2D ref="css2d" />
-          <Css3D ref="css3d" />
-          <ModelPanel ref="modelPanel" />
-          <!-- <Effect /> -->
-        </Model>
+        <VideoPlayer v-if="$store.state.index.curObjLevel == 4" />
         <Layers ref="layer" />
       </div>
     </Container>
@@ -18,13 +12,9 @@
 <script>
 import Container from "./components/container";
 import Layers from "./layers";
-import ModelPanel from "./layers/panel/modelPanel.vue";
-import Model from "./model";
-import Msymbol from "./model/symbol";
-import Css2D from "./model/css2D";
-import Css3D from "./model/css3D";
-import Effect from "./model/effect";
+import VideoPlayer from "@/common/videoPlayer";
 import { coordinate } from "./api/monitorLine";
+import { panelHandle } from "@/utils/action.js";
 export default {
   data() {
     return {
@@ -34,12 +24,7 @@ export default {
   components: {
     Container,
     Layers,
-    Model,
-    Effect,
-    Msymbol,
-    Css2D,
-    Css3D,
-    ModelPanel,
+    VideoPlayer,
   },
   computed: {
     wrapeStyle() {
@@ -59,7 +44,7 @@ export default {
         sepia,
       } = this.$store.state.layer;
       return {
-        background: this.$store.state.screen.backgroundColor,
+        // background: this.$store.state.screen.backgroundColor,
         filter: `grayscale(${grayscale}%) brightness(${brightness}%) contrast(${contrast}%) saturate(${saturate}%) opacity(${opacity}%) sepia(${sepia}%)`,
       };
     },
@@ -70,7 +55,8 @@ export default {
     },
   },
   mounted() {
-    this.getSymbolList();
+    // this.getSymbolList();
+    this.showMenu();
   },
   methods: {
     getSymbolList(id) {
@@ -129,6 +115,17 @@ export default {
     },
     progress(percent) {
       this.$refs.viewer.percent = percent;
+    },
+    showMenu() {
+      setTimeout(() => {
+        panelHandle([
+          "leftMenu",
+          "header",
+          "rightMenu",
+          "bottomMenu",
+          "bodyFootMenu",
+        ]);
+      }, 500);
     },
   },
 };

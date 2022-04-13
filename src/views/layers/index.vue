@@ -75,16 +75,6 @@
             <Province ref="province" />
             <Citys ref="citys" />
           </div>
-
-          <!-- <div class="map" v-if="show">
-            <Model
-              :size="{ w: 1920, h: 1080 }"
-              :isMask="false"
-              :autoRotate="false"
-            >
-              <GeoMap :mapGeoJson="map" />
-            </Model>
-          </div> -->
         </div>
         <div class="foot">
           <Box
@@ -159,19 +149,6 @@
         </RightMenu>
       </div>
     </div>
-    <!-- <div class="bottom-layers">
-      <BottomMenu />
-    </div> -->
-    <!-- <Popup :visible="visible">
-      <Model
-        :size="{ w: 700, h: 700 }"
-        :isMask="false"
-        v-if="symbolList.length"
-        ref="modelViewer"
-      >
-        <Msymbol :modelList="symbolList" @progress="progress" />
-      </Model>
-    </Popup> -->
   </div>
 </template>
 
@@ -185,12 +162,6 @@ import BottomMenu from "./nav/bottomMenu";
 import RightMenu from "./nav/rightMenu";
 import Panel from "./panel";
 import Popup from "../components/popup.vue";
-import Model from "../model";
-import Msymbol from "../model/symbol";
-// import GeoMap from "../model/GeoJsonMap";
-// import js from "../model/GeoJsonMap/mapData/jiangsu.json";
-// import wx from "../model/GeoJsonMap/mapData/wuxi.json";
-import { login } from "../api/user";
 import World from "../world.vue";
 import Country from "../country.vue";
 import Province from "../province.vue";
@@ -231,9 +202,6 @@ export default {
     BottomMenu,
     Panel,
     Popup,
-    Model,
-    Msymbol,
-    // GeoMap,
     DateTime,
     Nav,
     News,
